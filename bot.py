@@ -5,12 +5,23 @@ import asyncio
 import random
 import os
 import bot
+
+
+
+
+
+
+
+
+
+
+
 Bot = commands.Bot(command_prefix= "!")
 
 
 @Bot.event
 async def on_member_join(member):
-    role = discord.utils.get(member.server.roles, name="Мороженко")
+    role = discord.utils.get(member.server.roles, name="698627093675900929")
     await member.add_roles(member, role)
 
 @Bot.command()
