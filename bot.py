@@ -4,20 +4,15 @@ from discord.ext.commands import Bot
 import asyncio
 import random
 import os
+import bot
 
 Bot = commands.Bot(command_prefix= "!")
 
 
- #@Bot.event
- #async def on_member_join(member):
-    # role = discord.utils.get(member.server.roles, name="Мороженко")
-   #  await add_roles(member, role)
-
 @Bot.event
-async def on_ready():
-    print('online!')
-    game = discord.Game(r"Vanila Майнкрафт")
-    await Bot.change_presence(status=discord.Status.online, activity=game)
+async def on_member_join(member):
+    role = discord.utils.get(member.server.roles, name="Мороженко")
+    await Bot.add_roles(member, role)
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
@@ -60,7 +55,17 @@ async def спор(ctx):
     if(num == 2):    
            await ctx.send("Вам выпала :yen: Решка")
            print("[?coin - done")
-       
-       
+
+@Bot.command(pass_context = True)
+@commands.has_permissions(administrator = True)
+async def чистка(ctx, amount = 100):
+    
+    await ctx.message.delete() # Удаляет написанное вами сообщение
+    await ctx.channel.purge(limit = amount) #удаляет сообщения
+    em = discord.Embed(description= f'было удаленно *{amount}* сообщений', color = 708090) #настройка embed
+    await ctx.send(embed=em) #вставка embed
+    await asyncio.sleep(3) #таймер ожидания
+    await ctx.channel.purge(limit = 1) # Удаляет сообщение бота
+
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
