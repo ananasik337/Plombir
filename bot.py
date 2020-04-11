@@ -92,7 +92,7 @@ class Messages:
                     continue
         return n_messages
 
-@Bot.command(name = "messages")
+@Bot.command(name = "msg")
 async def num_msg(ctx, member: discord.Member = None):
     user = ctx.message.author if (member == None) else member
     number = await Messages(Bot).number_messages(user)
