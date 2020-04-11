@@ -1,0 +1,6 @@
+asyncio
+random
+discord.py
+websockets
+chardet
+aiohttp
