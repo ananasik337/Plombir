@@ -21,9 +21,9 @@ import time
 
 Bot = commands.Bot(command_prefix= "!")
 
-#@Bot.event
-#async def on_member_join(ctx):
-#    await ctx.send("Приветствуем тебя на сервере Пломбир 2.0 {server} {user}!")
+@Bot.event
+async def on_member_join(ctx):
+    await ctx.send("Приветствуем тебя на сервере Пломбир 2.0 {**server**} {**user**}!")
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
