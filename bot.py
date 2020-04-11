@@ -7,6 +7,8 @@ import os
 import bot
 from discord import client
 from random import randint, choice
+import threading
+import time
 
 
 
@@ -98,45 +100,21 @@ async def num_msg(ctx, member: discord.Member = None):
     number = await Messages(Bot).number_messages(user)
     embed = discord.Embed(description = f"Количество сообщений на сервере от **{user.name}** — **{number}**!")
     await ctx.send(embed = embed)
-
-ID_COLOR_ROLE = 657246845290020885
-ID_SERVER = 526870790864502794
-class Hueta(commands.Cog):
-
-    def __init__(self, bot):
-        self.colors = 0xFF0000, 0xFF7F00, 0xFFFF00, 0x00FF00, 0x0000FF, 0x4B0082, 0x9400D3
-        self.bot = bot
-        self.color_role = None
     
-    @commands.command(name='pidor', aliases=['пидор', 'пидарас', 'ЛГБТ'])
-    async def cmd_lgbt(self, ctx, member:discord.Member=None):
-        member = ctx.author if member is None else member
-
-        if self.color_role in member.roles:
-            return await ctx.send(f"Пользователь {member.mention} уже итак {choice(['пидор', 'пидарас', 'педарасина'])}")
-
-        embed = discord.Embed(description=f"{member.mention} Теперь ты {choice(['пидор', 'пидарас', 'педарасина'])}!", colour=0xffffff)
-        embed.set_thumbnail(url=member.avatar_url)
-        embed.set_footer(text=f'Вызвал(a): {ctx.author.nick if ctx.author.nick else ctx.author.name}', icon_url=ctx.author.avatar_url)
-
-        await member.add_roles(self.color_role)
-        return await ctx.send(embed=embed)
-
-    async def __loop_edit_color_role(self):
-        while not self.bot.is_closed():
-            try:
-                await self.color_role.edit(colour=discord.Colour(choice(self.colors)))
-                await asyncio.sleep(15)
-            except Exception:
-                break
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        self.color_role = self.bot.get_guild(ID_SERVER).get_role(ID_COLOR_ROLE)
-        self.bot.loop.create_task(self.__loop_edit_color_role())
-
-def setup(bot):
-    bot.add_cog(Hueta(bot))
+@Bot.command()
+async def кнб(ctx, move: str = None):
+    solutions = ["`ножницы`", "`камень`", "`бумага`"]
+    winner = "**НИЧЬЯ**"
+    p1 = solutions.index(f"`{move.lower()}`")
+    p2 = randint(0, 2)
+    if p1 == 0 and p2 == 1 or p1 == 1 and p2 == 2 or p1 == 2 and p2 == 0:
+        winner = f"{ctx.message.author.mention} ты **Проиграл**"
+    elif p1 == 1 and p2 == 0 or p1 == 2 and p2 == 1 or p1 == 0 and p2 == 2:
+        winner = f"{ctx.message.author.mention} ты **Выиграл**"
+    await ctx.send(    
+        f"{ctx.message.author.mention} **=>** {solutions[p1]}\n"
+        f"{bot.user.mention} **=>** {solutions[p2]}\n"
+        f"{winner}")
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
