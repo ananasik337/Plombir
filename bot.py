@@ -59,7 +59,6 @@ async def спор(ctx):
 @Bot.command(pass_context = True)
 @commands.has_permissions(administrator = True)
 async def чистка(ctx, amount = 100):
-    
     await ctx.message.delete() # Удаляет написанное вами сообщение
     await ctx.channel.purge(limit = amount) #удаляет сообщения
     em = discord.Embed(description= f'было удаленно *{amount}* сообщений', color = 708090) #настройка embed
