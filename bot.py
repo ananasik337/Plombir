@@ -5,14 +5,13 @@ import asyncio
 import random
 import os
 import bot
-
 Bot = commands.Bot(command_prefix= "!")
 
 
 @Bot.event
 async def on_member_join(member):
     role = discord.utils.get(member.server.roles, name="Мороженко")
-    await Bot.add_roles(member, role)
+    await member.add_roles(member, role)
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
@@ -48,12 +47,15 @@ async def say(ctx, *args):
 
 @Bot.command()
 async def спор(ctx):
-    num=random.randint(1,2)
+    num=random.randint(1,2,3)
     if (num == 1):
            await ctx.send("Вым выпал :dollar: Орёл")
            print("[?coin] - done")
     if(num == 2):    
            await ctx.send("Вам выпала :yen: Решка")
+           print("[?coin - done")
+    if(num == 3):    
+           await ctx.send("Монетка встала на ребро!")
            print("[?coin - done")
 
 @Bot.command(pass_context = True)
@@ -65,6 +67,7 @@ async def очистить(ctx, amount = 100):
     await ctx.send(embed=em) #вставка embed
     await asyncio.sleep(3) #таймер ожидания
     await ctx.channel.purge(limit = 1) # Удаляет сообщение бота
+
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
