@@ -22,6 +22,20 @@ import time
 Bot = commands.Bot(command_prefix= "!")
 
 @Bot.event
+async def on_ready():
+    print('online!')
+    game = discord.Game(r"Vanila Майнкрафт")
+    await Bot.change_presence(status=discord.Status.online, activity=game)
+
+@bot.event
+async def on_member_join(member):
+    channel = bot.get_channel(698660443291385906)
+    role = discord.utils.get(member.guild.roles, id= 698514876313894993)
+    await member.add_roles(role)
+    await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` 
+    присоеденился📢''', color=0x0c0c0c))
+
+@Bot.event
 async def on_member_join(ctx):
     await ctx.send("Приветствуем тебя на сервере Пломбир 2.0 {**server**} {**user**}!")
 
