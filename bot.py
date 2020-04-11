@@ -101,8 +101,6 @@ async def num_msg(ctx, member: discord.Member = None):
 
 ID_COLOR_ROLE = 657246845290020885
 ID_SERVER = 526870790864502794
-
-
 class Hueta(commands.Cog):
 
     def __init__(self, bot):
