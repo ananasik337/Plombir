@@ -19,10 +19,14 @@ from discord import client
 
 Bot = commands.Bot(command_prefix= "!")
 
+@Bot.command()
+async def on_member_join(ctx, member: discord.Member):
+    mute_role = discord.utils.get(ctx.message.guild.roles, name= "Мороженко")
+    await member.add_roles(mute_role)
 
-@Bot.event
-async def on_member_join(ctx):
-    await ctx.send("Приветствуем тебя на сервере Пломбир 2.0 {server} {user}!")
+#@Bot.event
+#async def on_member_join(ctx):
+#    await ctx.send("Приветствуем тебя на сервере Пломбир 2.0 {server} {user}!")
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
