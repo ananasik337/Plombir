@@ -19,11 +19,6 @@ from discord import client
 
 Bot = commands.Bot(command_prefix= "!")
 
-@Bot.command()
-async def on_member_join(ctx, member: discord.Member):
-    mute_role = discord.utils.get(ctx.message.guild.roles, name= "Мороженко")
-    await member.add_roles(mute_role)
-
 #@Bot.event
 #async def on_member_join(ctx):
 #    await ctx.send("Приветствуем тебя на сервере Пломбир 2.0 {server} {user}!")
@@ -80,6 +75,29 @@ async def очистить(ctx, amount = 100):
     await asyncio.sleep(3) #таймер ожидания
     await ctx.channel.purge(limit = 1) # Удаляет сообщение бота
 
+class Messages:
+
+    def __init__(self, Bot):
+        self.Bot = Bot
+
+    async def number_messages(self, member):
+        n_messages = 0
+        for guild in self.Bot.guilds:
+            for channel in guild.text_channels:
+                try:
+                    async for message in channel.history(limit = None):
+                        if message.author == member:
+                            n_messages += 1
+                except (discord.Forbidden, discord.HTTPException):
+                    continue
+        return n_messages
+
+@Bot.command(name = "messages")
+async def num_msg(ctx, member: discord.Member = None):
+    user = ctx.message.author if (member == None) else member
+    number = await Messages(Bot).number_messages(user)
+    embed = discord.Embed(description = f"Количество сообщений на сервере от **{user.name}** — **{number}**!")
+    await ctx.send(embed = embed)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
