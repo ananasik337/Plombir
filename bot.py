@@ -60,9 +60,7 @@ async def спор(ctx):
     if(num == 2):    
            await ctx.send("Вам выпала :yen: Решка")
            print("[?coin - done")
-
-
-
-
-
+       
+       
 token = os.environ.get('BOT_TOKEN')
+Bot.run(str(token))
