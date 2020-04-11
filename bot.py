@@ -5,7 +5,7 @@ import asyncio
 import random
 import os
 import bot
-from discord import client
+from discord import client, member
 from random import randint, choice
 import threading
 import time
@@ -113,7 +113,7 @@ async def кнб(ctx, move: str = None):
         winner = f"{ctx.message.author.mention} ты **Выиграл**"
     await ctx.send(    
         f"{ctx.message.author.mention} **=>** {solutions[p1]}\n"
-        f"{bot.user.mention} **=>** {solutions[p2]}\n"
+        f"{member.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
 token = os.environ.get('BOT_TOKEN')
