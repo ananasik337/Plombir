@@ -47,15 +47,12 @@ async def say(ctx, *args):
 
 @Bot.command()
 async def спор(ctx):
-    num=random.randint(1,2,3)
+    num=random.randint(1,2)
     if (num == 1):
            await ctx.send("Вым выпал :dollar: Орёл")
            print("[?coin] - done")
     if(num == 2):    
            await ctx.send("Вам выпала :yen: Решка")
-           print("[?coin - done")
-    if(num == 3):    
-           await ctx.send("Монетка встала на ребро!")
            print("[?coin - done")
 
 @Bot.command(pass_context = True)
