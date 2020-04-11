@@ -3,6 +3,7 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 import asyncio
 import random
+import os
 
 Bot = commands.Bot(command_prefix= "!")
 
@@ -64,7 +65,4 @@ async def спор(ctx):
 
 
 
-
-
-           
-Bot.run("Njk4MjgxNDU1MTU0ODg4ODg0.XpDu1Q.hX1dSRBcH89Os_vhY-kK4Gc_b6k")
+token = os.environ.get('BOT_TOKEN')
