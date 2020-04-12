@@ -141,6 +141,7 @@ async def кнб(ctx, move: str = None):
         f"{winner}")
 
 @Bot.event
+@Bot.command()
 async def кнб_бан(ctx, member):
     author = ctx.message.author
     await ctx.send(f"{author.mention} ты **Выиграл**")
