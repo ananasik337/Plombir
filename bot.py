@@ -81,7 +81,7 @@ async def гадиклох(ctx):
 
 @Bot.command()
 @commands.has_permissions(administrator = True)
-async def say(ctx, args, *, content):
+async def say(ctx, *args, content):
 
     await ctx.message.delete()
     args = ' '.join(args).split('/', maxsplit = 1)
@@ -192,6 +192,13 @@ async def move(ctx, channel: discord.VoiceChannel = None, channel2: discord.Voic
         for member in x:
             await member.edit(voice_channel=channel2)
     else: await member.edit(voice_channel=channel2)
+
+@Bot.command()
+async def game(ctx, member: discord.Member = None):
+    await ctx.message.delete()
+    user = ctx.message.author if (member == None) else member
+    if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
+    else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
