@@ -21,11 +21,13 @@ Bot.remove_command('help')
 async def help(ctx):
     emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
     emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**")
-    emb.add_field(name = "{}ban".format(prefix), 
-    value= "**Банит участника**")
+    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**")
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Игры", colour= 0x8B8989)
-    emb.add_field(name = "{}**кнб**".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
+    emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
+    emb.set_footer(text= f'Вызвано: {ctx.message.author}', icon_url= str(ctx.message.author.avatar_url))
+    emb = discord.Embed(title= "Инструменты", colour= 0x8B8989)
+    emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
     await ctx.send(embed= emb)
     
 
