@@ -18,9 +18,9 @@ Bot = commands.Bot(command_prefix= prefix)
 Bot.remove_command('help')
 
 @Bot.command(pass_context = True)
-async def help(ctx):
-    emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
-    emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**")
+async def help(ctx,cnt):
+    emb = discord.Embed(title= "Информация о коммандах",colour= 0xfbfcfe)
+    emb.add_field(name = "{}``help``".format(prefix), value= "**Показывает все команды**" )
     emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Игры", colour= 0x8B8989)
@@ -81,7 +81,7 @@ async def гадиклох(ctx):
 
 @Bot.command()
 @commands.has_permissions(administrator = True)
-async def say(ctx, *args):
+async def say(ctx, args, *, content):
 
     await ctx.message.delete()
     args = ' '.join(args).split('/', maxsplit = 1)
@@ -89,7 +89,7 @@ async def say(ctx, *args):
         user = Bot.get_user(int(args[0][args[0].find("!") + 1 : -1]))
         await user.send(args[1])
     except:
-        await ctx.send(args[0].replace(' ', ''))
+        await ctx.send(args[0])
 
 @Bot.command()
 async def играть(ctx):
@@ -178,6 +178,20 @@ async def аватар(ctx, member : discord.Member = None):
     embed.set_image(url=user.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
+
+@Bot.command()
+@commands.has_permissions(administrator = True)
+async def move(ctx, channel: discord.VoiceChannel = None, channel2: discord.VoiceChannel = None, member: discord.Member = None):
+    await ctx.message.delete()
+    if channel == None:
+        pass
+    elif channel2 == None:
+        pass
+    elif member == None:
+        x = channel.members
+        for member in x:
+            await member.edit(voice_channel=channel2)
+    else: await member.edit(voice_channel=channel2)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
