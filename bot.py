@@ -134,7 +134,7 @@ async def ban(ctx, member : discord.Member, reason=None):
         await member.ban(reason=reason)
 
 @Bot.command()
-async def avatar(ctx, member : discord.Member = None):
+async def аватар(ctx, member : discord.Member = None):
     user = ctx.message.author if (member == None) else member
     await ctx.message.delete()
     embed = discord.Embed(title=f'Аватар пользователя {user}', description= f'[Ссылка на изображение]({user.avatar_url})', color=user.color)
@@ -142,6 +142,13 @@ async def avatar(ctx, member : discord.Member = None):
     embed.set_image(url=user.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
+
+@Bot.event
+async def on_message(message):
+    if message.author == Bot.user:
+        pass
+    if message.content.startswith('Привет боты'):
+        await message.channel.send('{0.author.mention} И тебе привет дружище'.format(message))
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
