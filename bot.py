@@ -35,7 +35,7 @@ async def help(ctx):
 @Bot.event
 async def on_ready():
     print('online!')
-    game = discord.Game(r"Vanila Майнкрафт")
+    game = discord.Game(r"Пломбир 2.0")
     await Bot.change_presence(status=discord.Status.online, activity=game)
 
 @Bot.event
@@ -141,11 +141,9 @@ async def кнб(ctx, move: str = None):
         f"{winner}")
 
 @Bot.command()
-async def кнббан(ctx, member):
+async def кнббан(ctx):
     author = ctx.message.author
     await ctx.send(f"{author.mention} ты **Выиграл**")
-    role = discord.utils.get(member.guild.roles, id= 698963276284952678)
-    await member.add_roles(role)
 
 @Bot.command()
 @commands.has_permissions(administrator = True)
