@@ -188,20 +188,16 @@ async def Info(ctx, member: discord.Member = None):
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
 
-@Bot.command()
-@commands.has_permissions(administrator = True)
-async def say(ctx, channel: discord.TextChannel, *, text):
-    text = text.split('|')
-    attachments = ctx.message.attachments
-    emb = discord.Embed(
-        title= text[0],
-        description = text[1],
-        colour = 0x00ff80
-    )
-    for a in attachments:
-        if a.url != None:
-            emb.set_image(url= f"{a.url}")    
-    await channel.send(embed=emb)
+@Bot.event
+async def on_message_delete(message, ctx):
+    channel = message.channel
+    channel = discord.utils.get(message.server.channels, name="logs")
+    emb = discord.Embed(title= "`Сообщения было удалено.`", colour= 0xe74c3c)
+    emb.add_field(name= "Удалённое сообщение: ", value= "{}".format(message.content), inline= False)
+    emb.add_field(name= "Автор сообщения: ", value= "**{}({})**".format(message.author, message.author.mention), inline= False)
+    emb.add_field(name= "В канале: ", value= "**{}({})**".format(message.channel, message.channel.mention))
+    emb.set_footer(text= "ID сообщения: **{}**  | Сегодня в {}".format(message.id, str(message.timestamp.strftime("%X"))))
+    await ctx.send_message(channel, embed = emb)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
