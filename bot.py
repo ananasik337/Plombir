@@ -20,12 +20,11 @@ Bot.remove_command('help')
 @Bot.command(pass_context = True)
 async def help(ctx):
     emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
-    emb.add_field(name = "{}help".format(prefix), value= "Показывает все команды")
-    await ctx.send(embed= emb)
-    emb.add_field(name = "{}ban".format(prefix), value= "Банит участника")
+    emb.add_field(name = "{}**help**".format(prefix), value= "Показывает все команды")
+    emb.add_field(name = "{}**ban**".format(prefix), value= "Банит участника")
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Игры", colour= 0xCDC9C9)
-    emb.add_field(name = "{}кнб".format(prefix), value= "Играть в камень/ножницы/бумага с ботом")
+    emb.add_field(name = "{}**кнб**".format(prefix), value= "Играть в камень/ножницы/бумага с ботом")
     await ctx.send(embed= emb)
     
 
@@ -41,8 +40,7 @@ async def on_member_join(member):
     channel = Bot.get_channel(698660443291385906)
     role = discord.utils.get(member.guild.roles, id= 698514876313894993)
     await member.add_roles(role)
-    await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` 
-    присоеденился📢''', color=0x0c0c0c))
+    await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` присоеденился📢''', color=0x0c0c0c))
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
