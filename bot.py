@@ -136,13 +136,18 @@ async def кнб(ctx, move: str = None):
         f"{winner}")
 
 @Bot.command()
+async def кнбан(ctx):
+    author = ctx.message.author
+    await ctx.send(f"{author.mention} ты **Выиграл**")
+
+@Bot.command()
 @commands.has_permissions(administrator = True)
 async def ban(ctx, member : discord.Member, reason=None):
     if reason == None:
         await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
     else:
         messageok = f"Ты был за забнанен на {ctx.guild.name} по причине {reason}"
-        await ctx.send(f"{ctx.author.mention}, Забанил! {ctx.get_user}")
+        await ctx.send(f"{ctx.author.mention} Человек был успешно забанен!:white_check_mark:")
         await member.send(messageok)
         await member.ban(reason=reason)
 
