@@ -11,8 +11,6 @@ import time
 import datetime
 import os
 from time import sleep
-import requests
-from PIL import Image, ImageFont, ImageDraw
 import io
 
 prefix = '!'
@@ -187,26 +185,6 @@ async def Info(ctx, member: discord.Member = None):
     user = ctx.message.author if (member == None) else member
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
-
-@Bot.command(aliases = ['профиль', 'карта']) #комманды
-async def card_user(ctx):
-    img = Image.new('RGBA', (400, 200), '#1C1C1C')
-    url = str(ctx.author.avatar_url)[:-10]
-    respone = requests.get(url, stream = True)
-    respone = Image.open(io.BytesIO(respone.content))
-    respone = respone.convert('RGBA')
-    respone = respone.resize((100, 100), Image.ANTIALIAS)
-    img.paste(respone, (15, 15, 115, 115))
-    idraw = ImageDraw.Draw(img)
-    name = ctx.author.name
-    tag = ctx.author.discriminator
-    headline = ImageFont.truetype('arial.ttf', size = 20)
-    undertext = ImageFont.truetype('arial.ttf', size = 12)
-    idraw.text((145, 15), f'{name}#{tag}', font = headline)
-    idraw.text((145, 50), f'ID: {ctx.author.id}', font = undertext
-    img.save('user_card.png')
-    await ctx.send(file = discord.File(fp = 'user_card.png'))
-
 
 
 token = os.environ.get('BOT_TOKEN')
