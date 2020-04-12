@@ -15,20 +15,20 @@ prefix = '!'
 
 Bot = commands.Bot(command_prefix= prefix)
 
-#Bot.remove_command('help')
+Bot.remove_command('help')
 
-#@Bot.command(pass_context = True)
-#async def help(ctx):
-#    emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
-#    emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**")
-#    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**")
-#    await ctx.send(embed= emb)
-#    emb = discord.Embed(title= "Игры", colour= 0x8B8989)
-#    emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
-#    await ctx.send(embed= emb)
-#    emb = discord.Embed(title= "Инструменты", colour= 0x8B8989)
-#    emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
-#    await ctx.send(embed= emb)
+@Bot.command(pass_context = True)
+async def help(ctx):
+    emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
+    emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**")
+    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**")
+    await ctx.send(embed= emb)
+    emb = discord.Embed(title= "Игры", colour= 0x8B8989)
+    emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
+    await ctx.send(embed= emb)
+    emb = discord.Embed(title= "Инструменты", colour= 0x8B8989)
+    emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
+    await ctx.send(embed= emb)
     
 
 
@@ -140,10 +140,12 @@ async def кнб(ctx, move: str = None):
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
-@Bot.command()
-async def кнбан(ctx):
+@Bot.event
+async def кнб_бан(ctx, member):
     author = ctx.message.author
     await ctx.send(f"{author.mention} ты **Выиграл**")
+    role = discord.utils.get(member.guild.roles, id= 698963276284952678)
+    await member.add_roles(role)
 
 @Bot.command()
 @commands.has_permissions(administrator = True)
