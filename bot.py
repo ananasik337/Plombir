@@ -59,7 +59,7 @@ async def гадиклох(ctx):
 @commands.has_permissions(administrator = True)
 async def say(ctx, *args):
     await ctx.message.delete()
-    args = ''.join(args).split('/', maxsplit = 1)
+    args = ' '.join(args).split('/', maxsplit = 1)
     try:
         user = Bot.get_user(int(args[0][args[0].find("!") + 1 : -1]))
         await user.send(args[1])
@@ -83,7 +83,7 @@ async def очистить(ctx, amount = 100):
     await ctx.channel.purge(limit = amount) #удаляет сообщения
     em = discord.Embed(description= f'было удаленно *{amount}* сообщений', color = 708090) #настройка embed
     await ctx.send(embed=em) #вставка embed
-    await asyncio.sleep(3) #таймер ожидания
+    await asyncio.sleep(1) #таймер ожидания
     await ctx.channel.purge(limit = 1) # Удаляет сообщение бота
 
 class Messages:
@@ -125,11 +125,19 @@ async def кнб(ctx, move: str = None):
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
-@Bot.command(pass_context= True)
-async def randm(ctx):
-    await ctx.say("**{}, Рандомное число: __{}__**".format(ctx.message.author.mention, random.randint(1, 100)))
-    await asyncio.sleep(1)
-    await ctx.delete_message(ctx.message)
+#bans a user with a reason
+@Bot.event
+@commands.has_any_role("Keyblade Master","Foretellers")
+async def ban (ctx, member:discord.User=None, reason =None):
+    if member == None or member == ctx.message.author:
+        await ctx.channel.send("Ты не можешь забанить самого себя")
+        return
+    if reason == None:
+        reason = "Вел себя плохо!"
+    message = f"Ты был забанен на {ctx.guild.name} потому-что {reason}"
+    await member.send(message)
+    # await ctx.guild.ban(member, reason=reason)
+    await ctx.channel.send(f"{member} был забанен")
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
