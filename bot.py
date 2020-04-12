@@ -18,7 +18,7 @@ Bot = commands.Bot(command_prefix= prefix)
 Bot.remove_command('help')
 
 @Bot.command(pass_context = True)
-async def help(ctx):
+async def инфо(ctx):
     emb = discord.Embed(title= "Информация о коммандах",colour= 0xfbfcfe)
     emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**" )
     emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)
@@ -79,17 +79,16 @@ async def гадиклох(ctx):
     author = ctx.message.author
     await ctx.send(f"Полностью согласен с вашем мнением!:white_check_mark: {author.mention}")
 
-@Bot.command()
-@commands.has_permissions(administrator = True)
-async def say(ctx, *args, content):
-
-    await ctx.message.delete()
-    args = ' '.join(args).split('/', maxsplit = 1)
-    try:
-        user = Bot.get_user(int(args[0][args[0].find("!") + 1 : -1]))
-        await user.send(args[1])
-    except:
-        await ctx.send(args[0])
+#@Bot.command()
+#@commands.has_permissions(administrator = True)
+#async def say(ctx, args, *,content):
+#    await ctx.message.delete()
+#    args = ' '.join(args).split('/', maxsplit = 1)
+#    try:
+#        user = Bot.get_user(int(args[0][args[0].find("!") + 1 : -1]))
+#        await user.send(args[1])
+#    except:
+#        await ctx.send(args[0])
 
 @Bot.command()
 async def играть(ctx):
@@ -194,11 +193,26 @@ async def move(ctx, channel: discord.VoiceChannel = None, channel2: discord.Voic
     else: await member.edit(voice_channel=channel2)
 
 @Bot.command()
-async def game(ctx, member: discord.Member = None):
+async def Info(ctx, member: discord.Member = None):
     await ctx.message.delete()
     user = ctx.message.author if (member == None) else member
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
+
+@Bot.command()
+@commands.has_permissions(administrator = True)
+async def say(ctx, channel: discord.TextChannel, *, text):
+    text = text.split('|')
+    attachments = ctx.message.attachments
+    emb = discord.Embed(
+        title= text[0],
+        description = text[1],
+        colour = 0x00ff80
+    )
+    for a in attachments:
+        if a.url != None:
+            emb.set_image(url= f"{a.url}")    
+    await channel.send(embed=emb)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
