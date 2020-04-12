@@ -55,6 +55,7 @@ async def гадиклох(ctx):
 @Bot.command()
 @commands.has_permissions(administrator = True)
 async def say(ctx, *args):
+
     await ctx.message.delete()
     args = ' '.join(args).split('/', maxsplit = 1)
     try:
@@ -64,7 +65,8 @@ async def say(ctx, *args):
         await ctx.send(args[0])
 
 @Bot.command()
-async def спор(ctx):
+async def играть(ctx):
+    """Играть в орел и решка с ботом"""
     num=random.randint(1,2)
     if (num == 1):
            await ctx.send("Вым выпал :dollar: Орёл")
@@ -76,6 +78,7 @@ async def спор(ctx):
 @Bot.command(pass_context = True)
 @commands.has_permissions(administrator = True)
 async def очистить(ctx, amount = 100):
+    """Чистка чата"""
     await ctx.message.delete() # Удаляет написанное вами сообщение
     await ctx.channel.purge(limit = amount) #удаляет сообщения
     em = discord.Embed(description= f'было удаленно *{amount}* сообщений', color = 708090) #настройка embed
@@ -102,6 +105,7 @@ class Messages:
 
 @Bot.command(name = "msg")
 async def num_msg(ctx, member: discord.Member = None):
+    """Счетчик сообщний"""
     user = ctx.message.author if (member == None) else member
     number = await Messages(Bot).number_messages(user)
     embed = discord.Embed(description = f"Количество сообщений на сервере от **{user.name}** — **{number}**!")
@@ -125,7 +129,7 @@ async def кнб(ctx, move: str = None):
 @Bot.command()
 @commands.has_permissions(administrator = True)
 async def ban(ctx, member : discord.Member, reason=None):
-    """Bans a user"""
+    """Заблокировать человека"""
     if reason == None:
         await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
     else:
