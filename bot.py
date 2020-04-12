@@ -140,9 +140,8 @@ async def кнб(ctx, move: str = None):
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
-@Bot.event
 @Bot.command()
-async def кнб_бан(ctx, member):
+async def кнббан(ctx, member):
     author = ctx.message.author
     await ctx.send(f"{author.mention} ты **Выиграл**")
     role = discord.utils.get(member.guild.roles, id= 698963276284952678)
