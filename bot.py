@@ -4,6 +4,7 @@ from discord.ext.commands import Bot
 import asyncio
 import random
 import bot
+import COVID19Py
 from discord import client, guild, member
 from random import randint, choice
 import threading
@@ -12,12 +13,17 @@ import datetime
 import os
 from time import sleep
 import io
+import sqlite3
 
 prefix = '!'
 
 Bot = commands.Bot(command_prefix= prefix)
 
 Bot.remove_command('help')
+
+conn = sqlite3.connect("D:/пломбир/asd.db") #например: C:/Users/z3r0x/Desktop/LionBot/database.db
+cursor = conn.cursor()
+
 
 @Bot.command(pass_context = True)
 async def инфо(ctx):
@@ -186,6 +192,19 @@ async def Info(ctx, member: discord.Member = None):
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
 
+@Bot.command()
+async def covid(ctx):
+    covid19 = COVID19Py.COVID19()
+    location = covid19.getLocationByCountryCode("RU")
+    date = location[0]['last_updated'].split("T")
+    time = date[1].split(".")
+
+    embed = discord.Embed(title = f'**Случаи заболевания COVID-19, Россия:**', url = 'https://www.worldometers.info/coronavirus/', description = f'''**Население:** {location[0]['country_population']:,}\n**Последние обновление:** {date[0]} {time[0]}\n**Последние данные:**\n**Заболевших:** {location[0]['latest']['confirmed']:,}\n**Смертей:** {location[0]['latest']['deaths']:,}''', color=0x0c0c0c)
+
+    embed.set_footer(text = f'{Bot.user.name} © 2020 | Все права под защитой', icon_url = Bot.user.avatar_url)
+    embed.set_thumbnail(url = 'https://vestirossii.com/wp-content/uploads/epidemiologi-uznali-mnogo-novogo-o-kitajskom-koronaviruse_5e32cc478c9e1.jpeg')
+
+    await ctx.send(embed = embed)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
