@@ -25,9 +25,15 @@ async def help(ctx):
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Игры", colour= 0x8B8989)
     emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
+    emb.add_field(name = "{}играть".format(prefix), value= "**В орел и решка**")
     await ctx.send(embed= emb)
-    emb = discord.Embed(title= "Инструменты", colour= 0x8B8989)
+    emb = discord.Embed(title= "Инструменты(Админ)", colour= 0x8B8989)
     emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
+    emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**")
+    emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**")
+    emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**")
+    emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
+    emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**")
     await ctx.send(embed= emb)
     
 
@@ -44,6 +50,13 @@ async def on_member_join(member):
     role = discord.utils.get(member.guild.roles, id= 698514876313894993)
     await member.add_roles(role)
     await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` присоеденился📢''', color=0x0c0c0c))
+
+@Bot.event
+async def on_member_remove(member):
+    channel = Bot.get_channel(698660443291385906)
+    role = discord.utils.get(member.guild.roles, id= 698514876313894993)
+    await member.add_roles(role)
+    await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` отключился📢''', color=0x0c0c0c))
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
@@ -76,7 +89,7 @@ async def say(ctx, *args):
         user = Bot.get_user(int(args[0][args[0].find("!") + 1 : -1]))
         await user.send(args[1])
     except:
-        await ctx.send(args[0])
+        await ctx.send(args[0].replace(' ', ''))
 
 @Bot.command()
 async def играть(ctx):
@@ -117,7 +130,7 @@ class Messages:
                     continue
         return n_messages
 
-@Bot.command(name = "сбщ")
+@Bot.command(name = "стат")
 async def num_msg(ctx, member: discord.Member = None):
     """Счетчик сообщний"""
     user = ctx.message.author if (member == None) else member
