@@ -3,13 +3,17 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 import asyncio
 import random
-import os
 import bot
 from discord import client, guild, member
 from random import randint, choice
 import threading
 import time
 import datetime
+import os
+from time import sleep
+import requests
+from PIL import Image, ImageFont, ImageDraw
+import io
 
 prefix = '!'
 
@@ -100,12 +104,9 @@ async def очистить(ctx, amount = 1000):
     await ctx.send(embed=em) #вставка embed
     await asyncio.sleep(1) #таймер ожидания
     await ctx.channel.purge(limit = 1) # Удаляет сообщение бота
-
 class Messages:
-
     def __init__(self, Bot):
         self.Bot = Bot
-
     async def number_messages(self, member):
         n_messages = 0
         for guild in self.Bot.guilds:
@@ -117,7 +118,6 @@ class Messages:
                 except (discord.Forbidden, discord.HTTPException):
                     continue
         return n_messages
-
 @Bot.command(name = "стат")
 async def num_msg(ctx, member: discord.Member = None):
     """Счетчик сообщний"""
@@ -188,16 +188,26 @@ async def Info(ctx, member: discord.Member = None):
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
 
-@Bot.event
-async def on_message_delete(message, ctx, channel2):
-    channel2 = message.channel
-    channel = discord.utils.get(message.server.channels, name="logs")
-    emb = discord.Embed(title= "`Сообщения было удалено.`", colour= 0xe74c3c)
-    emb.add_field(name= "Удалённое сообщение: ", value= "{}".format(message.content), inline= False)
-    emb.add_field(name= "Автор сообщения: ", value= "**{}({})**".format(message.author, message.author.mention), inline= False)
-    emb.add_field(name= "В канале: ", value= "**{}({})**".format(message.channel, message.channel.mention))
-    emb.set_footer(text= "ID сообщения: **{}**  | Сегодня в {}".format(message.id, str(message.timestamp.strftime("%X"))))
-    await ctx.send_message(channel, embed = emb)
+@Bot.command(aliases = ['профиль', 'карта']) #комманды
+async def card_user(ctx):
+    img = Image.new('RGBA', (400, 200), '#1C1C1C')
+    url = str(ctx.author.avatar_url)[:-10]
+    respone = requests.get(url, stream = True)
+    respone = Image.open(io.BytesIO(respone.content))
+    respone = Image.convert('RGBA')
+    respone = respone.resize((100, 100), Image.ANTIALIAS)
+    img.paste(respone, (15, 15, 115, 115))
+    idraw = ImageDraw.Draw(img)
+    name = ctx.author.name
+    tag = ctx.author.discriminator
+    headline = ImageFont.truetype('arial.ttf', size = 20)
+    undertext = ImageFont.truetype('arial.ttf', size = 12)
+    idraw.text((145, 15), f'{name}#{tag}', font = headline)
+    idraw.text((145, 50), f'ID: {ctx.author.id}', font = undertext
+    img.save('user_card.png')
+    await ctx.send(file = discord.File(fp = 'user_card.png'))
+
+
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
