@@ -12,9 +12,6 @@ import time
 import datetime
 
 
-
-
-
 Bot = commands.Bot(command_prefix= "!")
 
 @Bot.event
@@ -125,13 +122,22 @@ async def кнб(ctx, move: str = None):
 @Bot.command()
 @commands.has_permissions(administrator = True)
 async def ban(ctx, member : discord.Member, reason=None):
-    """Bans a user"""
     if reason == None:
         await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
     else:
         messageok = f"Ты был за забнанен на {ctx.guild.name} по причине {reason}"
         await member.send(messageok)
         await member.ban(reason=reason)
+
+@Bot.command()
+@commands.has_permissions(administrator = True)
+async def kick(ctx, member : discord.Member, reason=None):
+    if reason == None:
+        await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
+    else:
+        messageok = f"Ты был за кикнут на {ctx.guild.name} по причине {reason}"
+        await member.send(messageok)
+        await member.kick(reason=reason)
 
 @Bot.command()
 async def аватар(ctx, member : discord.Member = None):
@@ -142,6 +148,13 @@ async def аватар(ctx, member : discord.Member = None):
     embed.set_image(url=user.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
+
+@Bot.event
+async def on_message(message):
+    if message.author == Bot.user:
+        pass
+    if message.content.startswith('Привет боты'):
+        await message.channel.send('{0.author.mention} И тебе привет дружище'.format(message))
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
