@@ -124,7 +124,7 @@ async def кнб(ctx, move: str = None):
 async def ban(ctx, member : discord.Member, reason=None):
     """Bans a user"""
     if reason == None:
-        await ctx.send(f"Woah {ctx.author.mention}, Make sure you provide a reason!")
+        await ctx.send(f"Воу {ctx.author.mention}, веди причину для этого!")
     else:
         messageok = f"Ты был за забнанен на {ctx.guild.name} за {reason}"
         await member.send(messageok)
