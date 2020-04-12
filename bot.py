@@ -130,16 +130,6 @@ async def ban(ctx, member : discord.Member, reason=None):
         await member.ban(reason=reason)
 
 @Bot.command()
-@commands.has_permissions(administrator = True)
-async def kick(ctx, member : discord.Member, reason=None):
-    if reason == None:
-        await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
-    else:
-        messageok = f"Ты был за кикнут на {ctx.guild.name} по причине {reason}"
-        await member.send(messageok)
-        await member.kick(reason=reason)
-
-@Bot.command()
 async def аватар(ctx, member : discord.Member = None):
     user = ctx.message.author if (member == None) else member
     await ctx.message.delete()
