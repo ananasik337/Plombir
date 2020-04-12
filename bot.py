@@ -18,7 +18,6 @@ import time
 
 
 
-
 Bot = commands.Bot(command_prefix= "!")
 
 @Bot.event
@@ -125,6 +124,15 @@ async def кнб(ctx, move: str = None):
         f"{ctx.message.author.mention} **=>** {solutions[p1]}\n"
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
+
+TPC = input("Привет, ты подписчик CUP'а?(Да/Нет): ")
+if TPC == "Да":
+    print("Молодец! держи печеньки)))")
+
+elif TPC == "Нет":
+    print("Тогда купи прохожку! вот https://vanillo.mcpetrade.ru")
+else:
+    print("Неверный ответ!")
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
