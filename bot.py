@@ -15,20 +15,20 @@ prefix = '!'
 
 Bot = commands.Bot(command_prefix= prefix)
 
-Bot.remove_command('help')
+#Bot.remove_command('help')
 
-@Bot.command(pass_context = True)
-async def help(ctx):
-    emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
-    emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**")
-    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**")
-    await ctx.send(embed= emb)
-    emb = discord.Embed(title= "Игры", colour= 0x8B8989)
-    emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
-    await ctx.send(embed= emb)
-    emb = discord.Embed(title= "Инструменты", colour= 0x8B8989)
-    emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
-    await ctx.send(embed= emb)
+#@Bot.command(pass_context = True)
+#async def help(ctx):
+#    emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
+#    emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**")
+#    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**")
+#    await ctx.send(embed= emb)
+#    emb = discord.Embed(title= "Игры", colour= 0x8B8989)
+#    emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
+#    await ctx.send(embed= emb)
+#    emb = discord.Embed(title= "Инструменты", colour= 0x8B8989)
+#    emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
+#    await ctx.send(embed= emb)
     
 
 
