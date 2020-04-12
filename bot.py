@@ -66,7 +66,7 @@ async def say(ctx, *args):
 
 @Bot.command()
 async def играть(ctx):
-    """Играть в орел и решка с ботом"""
+    """Играть с ботом"""
     num=random.randint(1,2)
     if (num == 1):
            await ctx.send("Вым выпал :dollar: Орёл")
