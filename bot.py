@@ -20,8 +20,8 @@ Bot.remove_command('help')
 @Bot.command(pass_context = True)
 async def help(ctx):
     emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
-    emb.add_field(name = "**{}help**".format(prefix), value= "Показывает все команды")
-    emb.add_field(name = "**{}ban**".format(prefix), value= "Банит участника")
+    emb.add_field(name = "**help**".format(prefix), description= "Показывает все команды")
+    emb.add_field(name = "**ban**".format(prefix), description= "Банит участника")
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Игры", colour= 0x8B8989)
     emb.add_field(name = "{}**кнб**".format(prefix), value= "Играть в камень/ножницы/бумага с ботом")
@@ -114,7 +114,7 @@ class Messages:
                     continue
         return n_messages
 
-@Bot.command(name = "msg")
+@Bot.command(name = "сбщ")
 async def num_msg(ctx, member: discord.Member = None):
     """Счетчик сообщний"""
     user = ctx.message.author if (member == None) else member
