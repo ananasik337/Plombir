@@ -41,7 +41,7 @@ async def инфо(ctx):
 @Bot.event
 async def on_ready():
     print('online!')
-    game = discord.Game(r"Пломбир 2.0")
+    game = discord.Game(r"!инфо")
     await Bot.change_presence(status=discord.Status.online, activity=game)
 
 @Bot.event
@@ -78,17 +78,6 @@ async def unmute(ctx, member: discord.Member):
 async def гадиклох(ctx):
     author = ctx.message.author
     await ctx.send(f"Полностью согласен с вашем мнением!:white_check_mark: {author.mention}")
-
-#@Bot.command()
-#@commands.has_permissions(administrator = True)
-#async def say(ctx, args, *,content):
-#    await ctx.message.delete()
-#    args = ' '.join(args).split('/', maxsplit = 1)
-#    try:
-#        user = Bot.get_user(int(args[0][args[0].find("!") + 1 : -1]))
-#        await user.send(args[1])
-#    except:
-#        await ctx.send(args[0])
 
 @Bot.command()
 async def играть(ctx):
