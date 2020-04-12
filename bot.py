@@ -19,9 +19,11 @@ Bot.remove_command('help')
 
 @Bot.command(pass_context = True)
 async def help(ctx):
-    emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
+    emb = discord.Embed(title= "Информация о коммандах", colour= 0x8800)
     emb.add_field(name = "{}help".format(prefix), value= "Показывает все команды")
     emb.add_field(name = "{}ban".format(prefix), value= "Банит участника")
+    emb = discord.Embed(title= "Игры", colour= 0x8800)
+    emb.add_field(name = "{}кнб".format(prefix), value= "Играть в камень/ножницы/бумага с ботом")
     await ctx.send(embed= emb)
 
 
@@ -137,7 +139,6 @@ async def кнб(ctx, move: str = None):
 @Bot.command()
 @commands.has_permissions(administrator = True)
 async def ban(ctx, member : discord.Member, reason=None):
-    """Заблокировать человека"""
     if reason == None:
         await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
     else:
