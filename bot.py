@@ -142,7 +142,7 @@ async def ban(ctx, member : discord.Member, reason=None):
         await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
     else:
         messageok = f"Ты был за забнанен на {ctx.guild.name} по причине {reason}"
-        await ctx.send(f"{ctx.author.mention}, Забанил! {ctx.author.ban}")
+        await ctx.send(f"{ctx.author.mention}, Забанил! {ctx.get_user}")
         await member.send(messageok)
         await member.ban(reason=reason)
 
