@@ -5,7 +5,7 @@ import asyncio
 import random
 import os
 import bot
-from discord import client, member
+from discord import client, guild, member
 from random import randint, choice
 import threading
 import time
@@ -125,14 +125,11 @@ async def кнб(ctx, move: str = None):
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
-TPC = input("Привет, ты подписчик CUP'а?(Да/Нет): ")
-if TPC == "Да":
-    print("Молодец! держи печеньки)))")
-
-elif TPC == "Нет":
-    print("Тогда купи прохожку! вот https://vanillo.mcpetrade.ru")
-else:
-    print("Неверный ответ!")
+@Bot.command(pass_context= True)
+async def randm(ctx):
+    await bot.say("**{}, Рандомное число: __{}__**".format(ctx.message.author.mention, random.randint(1, 100)))
+    await asyncio.sleep(1)
+    await ctx.delete_message(ctx.message)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
