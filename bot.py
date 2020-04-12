@@ -127,7 +127,7 @@ async def кнб(ctx, move: str = None):
 
 @Bot.command(pass_context= True)
 async def randm(ctx):
-    await bot.say("**{}, Рандомное число: __{}__**".format(ctx.message.author.mention, random.randint(1, 100)))
+    await ctx.say("**{}, Рандомное число: __{}__**".format(ctx.message.author.mention, random.randint(1, 100)))
     await asyncio.sleep(1)
     await ctx.delete_message(ctx.message)
 
