@@ -22,7 +22,7 @@ async def help(ctx):
     emb = discord.Embed(title= "Информация о коммандах", colour= 0xffffff)
     emb.add_field(name = "{}help".format(prefix), value= "Показывает все команды")
     emb.add_field(name = "{}ban".format(prefix), value= "Банит участника")
-    await Bot.say(embed= emb)
+    await ctx.say(embed= emb)
 
 
 @Bot.event
