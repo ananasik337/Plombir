@@ -11,11 +11,19 @@ import threading
 import time
 import datetime
 
+prefix = '!'
 
+Bot = commands.Bot(command_prefix= prefix)
 
-Bot = commands.Bot(command_prefix= "!")
+Bot.remove_command('help')
 
-ban_msg = ["sasi", "пашел нахуй"]
+@Bot.command(pass_context = True)
+async def help(ctx):
+    emb = discord.Embed(title= "Информация о коммандах", colour= 0xffffff)
+    emb.add_field(name = "{}help".format(prefix), value= "Показывает все команды")
+    emb.add_field(name = "{}ban".format(prefix), value= "Банит участника")
+    await Bot.say(embed= emb)
+
 
 @Bot.event
 async def on_ready():
