@@ -85,7 +85,7 @@ async def играть(ctx):
 
 @Bot.command(pass_context = True)
 @commands.has_permissions(administrator = True)
-async def очистить(ctx, amount = 100):
+async def очистить(ctx, amount = 1000):
     """Чистка чата"""
     await ctx.message.delete() # Удаляет написанное вами сообщение
     await ctx.channel.purge(limit = amount) #удаляет сообщения
