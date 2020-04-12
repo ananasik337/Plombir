@@ -23,7 +23,9 @@ async def help(ctx):
     emb.add_field(name = "{}help".format(prefix), value= "Показывает все команды")
     emb.add_field(name = "{}ban".format(prefix), value= "Банит участника")
     await ctx.send(embed= emb)
+    emb = discord.Embed(title= "Игры", colour= 0xff0000)
     emb.add_field(name = "{}кнб".format(prefix), value= "Играть в камень/ножницы/бумага с ботом")
+    await ctx.send(embed= emb)
     
 
 
