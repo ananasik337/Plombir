@@ -126,7 +126,7 @@ async def кнб(ctx, move: str = None):
         f"{winner}")
 
 #bans a user with a reason
-@Bot.event
+@Bot.command()
 @commands.has_any_role("Keyblade Master","Foretellers")
 async def ban (ctx, member:discord.User=None, reason =None):
     if member == None or member == ctx.message.author:
