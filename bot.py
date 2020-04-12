@@ -194,7 +194,7 @@ async def card_user(ctx):
     url = str(ctx.author.avatar_url)[:-10]
     respone = requests.get(url, stream = True)
     respone = Image.open(io.BytesIO(respone.content))
-    respone = Image.convert('RGBA')
+    respone = respone.convert('RGBA')
     respone = respone.resize((100, 100), Image.ANTIALIAS)
     img.paste(respone, (15, 15, 115, 115))
     idraw = ImageDraw.Draw(img)
