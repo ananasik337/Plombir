@@ -9,6 +9,8 @@ from discord import client, guild, member
 from random import randint, choice
 import threading
 import time
+import datetime
+
 
 
 
@@ -121,14 +123,25 @@ async def кнб(ctx, move: str = None):
         f"{winner}")
 
 @Bot.command()
+@commands.has_permissions(administrator = True)
 async def ban(ctx, member : discord.Member, reason=None):
     """Bans a user"""
     if reason == None:
-        await ctx.send(f"Воу {ctx.author.mention}, веди причину для этого!")
+        await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
     else:
-        messageok = f"Ты был за забнанен на {ctx.guild.name} за {reason}"
+        messageok = f"Ты был за забнанен на {ctx.guild.name} по причине {reason}"
         await member.send(messageok)
         await member.ban(reason=reason)
+
+@Bot.command()
+async def avatar(ctx, member : discord.Member = None):
+    user = ctx.message.author if (member == None) else member
+    await ctx.message.delete()
+    embed = discord.Embed(title=f'Аватар пользователя {user}', description= f'[Ссылка на изображение]({user.avatar_url})', color=user.color)
+    embed.set_footer(text= f'Вызвано: {ctx.message.author}', icon_url= str(ctx.message.author.avatar_url))
+    embed.set_image(url=user.avatar_url)
+    embed.timestamp = datetime.datetime.utcnow()
+    await ctx.send(embed=embed)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
