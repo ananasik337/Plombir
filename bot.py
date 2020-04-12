@@ -125,19 +125,14 @@ async def кнб(ctx, move: str = None):
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
-#bans a user with a reason
-@Bot.command()
-@commands.has_any_role("Keyblade Master","Foretellers")
-async def ban (ctx, member:discord.User=None, reason =None):
-    if member == None or member == ctx.message.author:
-        await ctx.channel.send("Ты не можешь забанить самого себя")
-        return
+async def ban(ctx, member : discord.Member, reason=None):
+    """Bans a user"""
     if reason == None:
-        reason = "Вел себя плохо!"
-    message = f"Ты был забанен на {ctx.guild.name} потому-что {reason}"
-    await member.send(message)
-    # await ctx.guild.ban(member, reason=reason)
-    await ctx.channel.send(f"{member} был забанен")
+        await ctx.send(f"Woah {ctx.author.mention}, Make sure you provide a reason!")
+    else:
+        messageok = f"You have been banned from {ctx.guild.name} for {reason}"
+        await member.send(messageok)
+        await member.ban(reason=reason)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
