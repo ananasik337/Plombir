@@ -19,7 +19,7 @@ Bot.remove_command('help')
 
 @Bot.command(pass_context = True)
 async def help(ctx):
-    emb = discord.Embed(title= "Информация о коммандах", colour= 0xffffff)
+    emb = discord.Embed(title= "Информация о коммандах", colour= 0xfbfcfe)
     emb.add_field(name = "{}help".format(prefix), value= "Показывает все команды")
     emb.add_field(name = "{}ban".format(prefix), value= "Банит участника")
     await ctx.send(embed= emb)
