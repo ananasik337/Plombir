@@ -24,7 +24,7 @@ async def help(ctx):
     emb.add_field(name = "{}ban".format(prefix), value= "Банит участника")
     await ctx.send(embed= emb)
     emb.add_field(name = "{}кнб".format(prefix), value= "Играть в камень/ножницы/бумага с ботом")
-    await ctx.send(embed= emb)
+    
 
 
 @Bot.event
