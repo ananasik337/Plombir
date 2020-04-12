@@ -25,7 +25,7 @@ async def help(ctx):
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Игры", colour= 0x8B8989)
     emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
-    emb.set_footer(text= f'Вызвано: {ctx.message.author}', icon_url= str(ctx.message.author.avatar_url))
+    await ctx.send(embed= emb)
     emb = discord.Embed(title= "Инструменты", colour= 0x8B8989)
     emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
     await ctx.send(embed= emb)
