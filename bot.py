@@ -13,11 +13,6 @@ import time
 
 
 
-
-
-
-
-
 Bot = commands.Bot(command_prefix= "!")
 
 @Bot.event
@@ -125,12 +120,13 @@ async def кнб(ctx, move: str = None):
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
+@Bot.command()
 async def ban(ctx, member : discord.Member, reason=None):
     """Bans a user"""
     if reason == None:
         await ctx.send(f"Woah {ctx.author.mention}, Make sure you provide a reason!")
     else:
-        messageok = f"You have been banned from {ctx.guild.name} for {reason}"
+        messageok = f"Ты был за забнанен на {ctx.guild.name} за {reason}"
         await member.send(messageok)
         await member.ban(reason=reason)
 
