@@ -55,7 +55,7 @@ async def on_member_join(member):
 async def on_member_remove(member):
     channel = Bot.get_channel(698660443291385906)
     role = discord.utils.get(member.guild.roles, id= 698514876313894993)
-    await member.add_roles(role)
+    await member.remove_roles(role)
     await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` отключился📢''', color=0x0c0c0c))
 
 @Bot.command()
@@ -189,8 +189,8 @@ async def Info(ctx, member: discord.Member = None):
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
 
 @Bot.event
-async def on_message_delete(message, ctx):
-    channel = message.channel
+async def on_message_delete(message, ctx, channel2):
+    channel2 = message.channel
     channel = discord.utils.get(message.server.channels, name="logs")
     emb = discord.Embed(title= "`Сообщения было удалено.`", colour= 0xe74c3c)
     emb.add_field(name= "Удалённое сообщение: ", value= "{}".format(message.content), inline= False)
