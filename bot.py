@@ -143,12 +143,5 @@ async def аватар(ctx, member : discord.Member = None):
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
 
-@Bot.event
-async def on_message(message):
-    if message.author == Bot.user:
-        pass
-    if message.content.startswith('Привет боты'):
-        await message.channel.send('{0.author.mention} И тебе привет дружище'.format(message))
-
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
