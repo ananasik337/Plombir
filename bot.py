@@ -12,12 +12,17 @@ import datetime
 import os
 from time import sleep
 import io
+import sqlite3
 
 prefix = '!'
 
 Bot = commands.Bot(command_prefix= prefix)
 
 Bot.remove_command('help')
+
+conn = sqlite3.connect("D:/пломбир/asd.db") #например: C:/Users/z3r0x/Desktop/LionBot/database.db
+cursor = conn.cursor()
+
 
 @Bot.command(pass_context = True)
 async def инфо(ctx):
@@ -185,6 +190,20 @@ async def Info(ctx, member: discord.Member = None):
     user = ctx.message.author if (member == None) else member
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
+
+@Bot.command(pass_context= True)
+async def info(ctx, user: discord.User):
+    emb = discord.Embed(title= "Карточка",colour= 0xFF7F00)
+    emb.add_field(name= "Имя", value= user.name)
+    emb.add_field(name= "Зашел с", value= str(user.joined_at)[:16])
+    emb.add_field(name= "Айди", value= user.id)
+    if user.game is not None:
+        emb.add_field(name= "Игра", value= user.game)
+    emb.set_thumbnail(url= user.avatar_url)
+    emb.set_author(name= Bot.user.name, url= "ВОДОЛАЗ#1245")
+    emb.set_footer(text= "Вызвано: {}".format(user.name), icon_url= user.avatar.url)
+    await ctx.send(embed= emb)
+    await ctx.message.delete()
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
