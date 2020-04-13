@@ -12,6 +12,10 @@ import datetime
 import os
 from time import sleep
 import io
+import random as r
+import sqlite3
+
+
 
 prefix = '!'
 
@@ -21,22 +25,23 @@ Bot.remove_command('help')
 
 @Bot.command(pass_context = True)
 async def инфо(ctx):
-    emb = discord.Embed(title= "Информация о коммандах",colour= 0xfbfcfe)
+    emb = discord.Embed(title= "Информация о коммандах:globe_with_meridians:",colour= 0xfbfcfe)
     emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**" )
-    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)
     await ctx.send(embed= emb)
-    emb = discord.Embed(title= "Игры", colour= 0x8B8989)
+    emb = discord.Embed(title= "Игры:video_game:", colour= 0x8B8989)
     emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
     emb.add_field(name = "{}играть".format(prefix), value= "**В орел и решка**", inline=False)
     await ctx.send(embed= emb)
-    emb = discord.Embed(title= "Инструменты(Админ)", colour= 0x8B8989)
+    emb = discord.Embed(title= "Инструменты(Админ):tools:", colour= 0x8B8989)
     emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
     emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**", inline=False)
     emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**", inline=False)
-    emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**", inline=False)
-    emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**", inline=False)
-    emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
+    emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**")
+    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**")
     await ctx.send(embed= emb)
+    emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
+    emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
+    emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
     
 
 
