@@ -188,17 +188,17 @@ async def Info(ctx, member: discord.Member = None):
 
 @Bot.command(pass_context= True)
 async def info(ctx, user: discord.User):
+    await ctx.message.delete()
     emb = discord.Embed(title= "Карточка",colour= 0xFF7F00)
     emb.add_field(name= "Имя", value= user.name)
     emb.add_field(name= "Зашел с", value= str(user.joined_at)[:16])
     emb.add_field(name= "Айди", value= user.id)
-    if user.game is not None:
-        emb.add_field(name= "Игра", value= user.game)
+    if user.activity is not None:
+        emb.add_field(name= "Игра", value= {user.activity})
     emb.set_thumbnail(url= user.avatar_url)
     emb.set_author(name= Bot.user.name, url= "ВОДОЛАЗ#1245")
     emb.set_footer(text= "Вызвано: {}".format(user.name), icon_url= user.avatar.url)
     await ctx.send(embed= emb)
-    await ctx.message.delete()
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
