@@ -31,11 +31,11 @@ async def инфо(ctx):
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Инструменты(Админ)", colour= 0x8B8989)
     emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
-    emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**")
-    emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**")
-    emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**")
-    emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
-    emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**")
+    emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**", inline=False)
+    emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**", inline=False)
+    emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**", inline=False)
+    emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**", inline=False)
+    emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
     await ctx.send(embed= emb)
     
 
@@ -166,37 +166,11 @@ async def аватар(ctx, member : discord.Member = None):
     await ctx.send(embed=embed)
 
 @Bot.command()
-@commands.has_permissions(administrator = True)
-async def move(ctx, channel: discord.VoiceChannel = None, channel2: discord.VoiceChannel = None, member: discord.Member = None):
-    await ctx.message.delete()
-    if channel == None:
-        pass
-    elif channel2 == None:
-        pass
-    elif member == None:
-        x = channel.members
-        for member in x:
-            await member.edit(voice_channel=channel2)
-    else: await member.edit(voice_channel=channel2)
-
-@Bot.command()
 async def Info(ctx, member: discord.Member = None):
     await ctx.message.delete()
     user = ctx.message.author if (member == None) else member
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
-
-@Bot.command(pass_context= True)
-async def info(ctx, member: discord.Member):
-    await ctx.message.delete()
-    emb = discord.Embed(title= "Карточка{}".format(member.name), colour= 0xFF7F00)
-    emb.add_field(name= "Имя", value= member.name)
-    emb.add_field(name= "Зашел с", value= str(member.joined_at)[:16])
-    emb.add_field(name= "Айди", value= member.id)
-    emb.set_thumbnail(url= member.avatar_url)
-    emb.set_author(name= ctx.member.name, url= "https://discordapp.com/oauth2/authorize?client_id=698281455154888884&scope=bot&permissions=8")
-    emb.set_footer(text= "Вызвано: {}".format(member.name), icon_url= member.avatar.url)
-    await ctx.send(embed= emb)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
