@@ -12,17 +12,12 @@ import datetime
 import os
 from time import sleep
 import io
-import sqlite3
 
 prefix = '!'
 
 Bot = commands.Bot(command_prefix= prefix)
 
 Bot.remove_command('help')
-
-conn = sqlite3.connect("D:/пломбир/asd.db") #например: C:/Users/z3r0x/Desktop/LionBot/database.db
-cursor = conn.cursor()
-
 
 @Bot.command(pass_context = True)
 async def инфо(ctx):
