@@ -35,7 +35,7 @@ async def инфо(ctx):
     emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
     emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**", inline=False)
     emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**", inline=False)
-    emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**")
+    emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**", inline=False)
     emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**")
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
