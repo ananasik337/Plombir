@@ -195,9 +195,9 @@ async def Info(ctx, member: discord.Member = None):
 async def info(ctx, user: discord.User):
     emb = discord.Embed(title= "Карточка",colour= 0xFF7F00)
     emb.add_field(name= "Имя", value= user.name)
-    emb.add_field(name= "Зашел с", value= user.joined_at)
+    emb.add_field(name= "Зашел с", value= str(user.joined_at)[:16])
     emb.add_field(name= "АЙДИ", value= user.id)
-    if user.game is None:
+    if user.game is not None:
         emb.add_field(name= "Игра", value= user.game)
     emb.set_thumbnail(url= user.avatar_url)
     emb.set_author(name= Bot.user.name, url= "ВОДОЛАЗ#1245")
