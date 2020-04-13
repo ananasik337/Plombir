@@ -187,15 +187,15 @@ async def Info(ctx, member: discord.Member = None):
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
 
 @Bot.command(pass_context= True)
-async def info(ctx, user: discord.User):
+async def info(ctx, member: discord.Member):
     await ctx.message.delete()
-    emb = discord.Embed(title= "Карточка",colour= 0xFF7F00)
-    emb.add_field(name= "Имя", value= user.name)
-    emb.add_field(name= "Зашел с", value= str(user.joined_at)[:16])
-    emb.add_field(name= "Айди", value= user.id)
-    emb.set_thumbnail(url= user.avatar_url)
-    emb.set_author(name= Bot.user.name, url= "ВОДОЛАЗ#1245")
-    emb.set_footer(text= "Вызвано: {}".format(user.name), icon_url= user.avatar.url)
+    emb = discord.Embed(title= "Карточка{}".format(member.name), colour= 0xFF7F00)
+    emb.add_field(name= "Имя", value= member.name)
+    emb.add_field(name= "Зашел с", value= str(member.joined_at)[:16])
+    emb.add_field(name= "Айди", value= member.id)
+    emb.set_thumbnail(url= member.avatar_url)
+    emb.set_author(name= ctx.member.name, url= "https://discordapp.com/oauth2/authorize?client_id=698281455154888884&scope=bot&permissions=8")
+    emb.set_footer(text= "Вызвано: {}".format(member.name), icon_url= member.avatar.url)
     await ctx.send(embed= emb)
 
 token = os.environ.get('BOT_TOKEN')
