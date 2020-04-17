@@ -25,7 +25,7 @@ Bot.remove_command('help')
 @Bot.command(pass_context = True)
 async def инфо(ctx):
     emb = discord.Embed(title= "Информация о коммандах:globe_with_meridians:",colour= 0xfbfcfe)
-    emb.add_field(name = "{}help".format(prefix), value= "**Показывает все команды**" )
+    emb.add_field(name = "{}инфо".format(prefix), value= "**Показывает все команды**" )
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Игры:video_game:", colour= 0x8B8989)
     emb.add_field(name = "{}кнб".format(prefix), value= "**Играть в камень/ножницы/бумага с ботом**")
@@ -41,6 +41,7 @@ async def инфо(ctx):
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
+    emb.add_field(name = "{}игра @ползователь".format(prefix), value= "**Показывает игру в которую играет пользователь**", inline=False)
     await ctx.send(embed= emb)
     
 
@@ -82,7 +83,7 @@ async def unmute(ctx, member: discord.Member):
     await ctx.send(f"Человек был успешно размучен!:white_check_mark: {author.mention}")
 
 @Bot.command()
-async def гадиклох(ctx):
+async def диаслох(ctx):
     author = ctx.message.author
     await ctx.send(f"Полностью согласен с вашем мнением!:white_check_mark: {author.mention}")
 
@@ -176,13 +177,6 @@ async def игра(ctx, member: discord.Member = None):
     user = ctx.message.author if (member == None) else member
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
-
-@Bot.command()
-@commands.has_permissions(administrator = True) # Могут использовать лишь пользователи с правами Администратора
-async def say(ctx, channel: discord.TextChannel, *, cnt):
-   await ctx.message.delete() # Удаляет написанное вами сообщение
-   embed = discord.Embed(description = cnt, colour = 0x00ff80) # Генерация красивого сообщения
-   await channel.send(embed=embed) # Отправка сообщения в указанный Вами канал
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
