@@ -88,6 +88,16 @@ async def диаслох(ctx):
     await ctx.send(f"Полностью согласен с вашем мнением!:white_check_mark: {author.mention}")
 
 @Bot.command()
+async def диас(ctx, member : discord.Member = None):
+    author = ctx.message.author
+    user = ctx.message.author if (member == None) else member
+    await ctx.send(f"ЕБАННЫЙ НН СЛИТАЯ ХУЙНЯ! 5х5 Проебал вантап гетнишь пмни {author.mention}")
+    embed = discord.Embed(title=f'Аватар пользователя {user}', description= f'[Ссылка на изображение]({user.avatar_url})', color=user.color)
+    embed.set_footer(text= f'Вызвано: {ctx.message.author}', icon_url= str(ctx.message.author.avatar_url))
+    embed.set_image(url=user.avatar_url)
+    embed.timestamp = datetime.datetime.utcnow()
+    await ctx.send(embed=embed)
+@Bot.command()
 async def играть(ctx):
     """Играть с ботом"""
     num=random.randint(1,2)
