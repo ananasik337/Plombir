@@ -94,7 +94,6 @@ async def диас(ctx, member : discord.Member = None):
     await ctx.send(f"ЕБАННЫЙ НН СЛИТАЯ ХУЙНЯ! 5х5 Проебал, вантап гетнишь пмни {author.mention}")
     embed = discord.Embed(title=f'Вызвано {user}', color=user.color)
     embed.set_footer(text= f'Вызвано: {ctx.message.author}', icon_url= str(ctx.message.author.avatar_url))
-    embed.set_image(url=user.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
 @Bot.command()
