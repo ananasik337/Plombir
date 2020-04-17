@@ -171,11 +171,18 @@ async def аватар(ctx, member : discord.Member = None):
     await ctx.send(embed=embed)
 
 @Bot.command()
-async def Info(ctx, member: discord.Member = None):
+async def игра(ctx, member: discord.Member = None):
     await ctx.message.delete()
     user = ctx.message.author if (member == None) else member
     if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
     else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
+
+@Bot.command()
+@commands.has_permissions(administrator = True) # Могут использовать лишь пользователи с правами Администратора
+async def say(ctx, channel: discord.TextChannel, *, cnt):
+   await ctx.message.delete() # Удаляет написанное вами сообщение
+   embed = discord.Embed(description = cnt, colour = 0x00ff80) # Генерация красивого сообщения
+   await channel.send(embed=embed) # Отправка сообщения в указанный Вами канал
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
