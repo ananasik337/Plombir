@@ -41,7 +41,9 @@ async def инфо(ctx):
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
-    emb.add_field(name = "{}игра @ползователь".format(prefix), value= "**Показывает игру в которую играет пользователь**", inline=False)
+    emb.add_field(name = "{}игра @ползователь (сломано)".format(prefix), value= "**Показывает игру в которую играет пользователь**", inline=False)
+    emb = discord.Embed(title= "Опечатано 2020 By Kyddes:space_invader:",colour= 0xfbfcfe)
+    emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
     
 
@@ -180,12 +182,23 @@ async def аватар(ctx, member : discord.Member = None):
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
 
+#@Bot.command()
+#async def игра(ctx, member: discord.Member = None):
+#    await ctx.message.delete()
+#    user = ctx.message.author if (member == None) else member
+#    if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
+#    else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
+
 @Bot.command()
-async def игра(ctx, member: discord.Member = None):
-    await ctx.message.delete()
-    user = ctx.message.author if (member == None) else member
-    if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
-    else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
+@commands.has_permissions(administrator = True)
+async def kick(ctx, member : discord.Member, reason=None):
+    if reason == None:
+        await ctx.send(f"Воу {ctx.author.mention}, введи причину для этого!")
+    else:
+        messageok = f"Ты был за забнанен на {ctx.guild.name} по причине {reason}"
+        await ctx.send(f"{ctx.author.mention} Человек был успешно забанен!:white_check_mark:")
+        await member.send(messageok)
+        await member.kick(reason=reason)
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
