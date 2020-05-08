@@ -198,8 +198,9 @@ async def kick(ctx, member : discord.Member, reason=None):
         await member.send(messageok)
         await member.kick(reason=reason)
 
+from random import choice
 @commands.command()
-async def gw(self, ctx, seconds: int, *, text):
+async def giveaway(self, ctx, seconds: int, *, text):
         '''простая команда создания розыгрыша-раздачи
         Время писать по схеме:   секунды, далее, произвольный текст приза'''
         def time_end_form(seconds):
@@ -217,7 +218,7 @@ async def gw(self, ctx, seconds: int, *, text):
         author = ctx.message.author
         time_end = time_end_form(seconds)
         message = await ctx.send(f"Розыгрыш!\nРазыгрывается:{text}\nЗавершится через {time_end}")
-        await message.add_reaction("✔")
+        await message.add_reaction("🎲")
         while seconds > -1:
             time_end = time_end_form(seconds)
             text_message = f"Розыгрыш!\nРазыгрывается:{text}\nЗавершится через {time_end}"
