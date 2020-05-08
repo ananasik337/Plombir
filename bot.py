@@ -179,13 +179,6 @@ async def аватар(ctx, member : discord.Member = None):
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
 
-#@Bot.command()
-#async def игра(ctx, member: discord.Member = None):
-#    await ctx.message.delete()
-#    user = ctx.message.author if (member == None) else member
-#    if user.activity: await ctx.send(f"Пользователь {user.mention} играет в **{user.activity}**")
-#    else: await ctx.send(f"Пользователь {user.mention} ни во что не играет!")
-
 @Bot.command()
 @commands.has_permissions(administrator = True)
 async def kick(ctx, member : discord.Member, reason=None):
@@ -197,18 +190,38 @@ async def kick(ctx, member : discord.Member, reason=None):
         await member.send(messageok)
         await member.kick(reason=reason)
 
-async def checkmem():
-    while not Bot.is_closed():
-        guild = Bot.get_guild(262289366041362432)
-        mem = [m for m in guild.members if not m.bot]
-        offline = len([1 for i in mem if str(i.status) in ['offline', 'invisible']])
-        await Bot.get_channel(707349794296954991).edit(name=f"В сети: {len(mem) - offline}")
-        await Bot.get_channel(688702411249811460).edit(name=f"Участников: {len(mem)}")
-        await asyncio.sleep(10)
+rainbowrolename = "admin"         #не id а само название
+delay = 1      #вкулдаун между сменой роли
 
-@Bot.event
-async def on_ready():
-    Bot.loop.create_task(checkmem())
+
+client = discord.Client()
+colours = [discord.Color.dark_orange(),discord.Color.orange(),discord.Color.dark_gold(),discord.Color.gold(),discord.Color.dark_magenta(),discord.Color.magenta(),discord.Color.red(),discord.Color.dark_red(),discord.Color.blue(),discord.Color.dark_blue(),discord.Color.teal(),discord.Color.dark_teal(),discord.Color.green(),discord.Color.dark_green(),discord.Color.purple(),discord.Color.dark_purple()]
+
+serverid = 698510531538976799
+async def rainbowrole(role):
+    for role in client.get_guild(serverid).roles:
+        if str(role) == str(rainbowrolename):
+            print("detected role")
+            while not client.is_closed():
+                try:
+                    await role.edit(color=random.choice(colours))
+                except Exception:
+                    print("can't edit role, make sure the bot role is above the rainbow role and that is have the perms to edit roles")
+                    pass
+                await asyncio.sleep(delay)
+    print('role with the name "' + rainbowrolename +'" not found')
+    print("creating the role...")
+    try:
+        await client.get_guild(serverid).create_role(reason="Created rainbow role", name=rainbowrolename)
+        print("role created!")
+        await asyncio.sleep(2)
+        client.loop.create_task(rainbowrole(rainbowrolename))
+    except Exception as e:
+        print("couldn't create the role. Make sure the bot have the perms to edit roles")
+        print(e)
+        pass
+        await asyncio.sleep(10)
+        client.loop.create_task(rainbowrole(rainbowrolename))
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
