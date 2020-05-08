@@ -36,8 +36,7 @@ async def инфо(ctx):
     emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**", inline=False)
     emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**")
     emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**", inline=False)
-    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)
-    emb.add_field(name = "{}gw".format(prefix),  value= "**Делает розыгрыш для участников сервера**")    
+    emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)   
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
@@ -198,41 +197,18 @@ async def kick(ctx, member : discord.Member, reason=None):
         await member.send(messageok)
         await member.kick(reason=reason)
 
-from random import choice
-@commands.command()
-async def giveaway(self, ctx, seconds: int, *, text):
-        '''простая команда создания розыгрыша-раздачи
-        Время писать по схеме:   секунды, далее, произвольный текст приза'''
-        def time_end_form(seconds):
-            h = seconds // 3600
-            m = (seconds - h * 3600) // 60
-            s = seconds % 60
-            if h < 10:
-                h = f"0{h}"
-            if m < 10:
-                m = f"0{m}"
-            if s < 10:
-                s = f"0{s}"
-            time_reward = f"{h} : {m} : {s}"
-            return time_reward
-        author = ctx.message.author
-        time_end = time_end_form(seconds)
-        message = await ctx.send(f"Розыгрыш!\nРазыгрывается:{text}\nЗавершится через {time_end}")
-        await message.add_reaction("🎲")
-        while seconds > -1:
-            time_end = time_end_form(seconds)
-            text_message = f"Розыгрыш!\nРазыгрывается:{text}\nЗавершится через {time_end}"
-            await message.edit(content=text_message)
-            await asyncio.sleep(1)
-            seconds -= 1
-        channel = message.channel
-        message_id = message.id
-        message = await channel.fetch_message(message_id)
-        reaction = message.reactions[0]
-        users = await reaction.users().flatten()
-        user = choice(users)
-        await ctx.send(f'Ахтунг!\n Победитель розыгрыша - {user.mention}!\n '
-                       f'Напишите {author.mention}, чтобы получить награду')
+async def checkmem():
+    while not Bot.is_closed():
+        guild = Bot.get_guild(262289366041362432)
+        mem = [m for m in guild.members if not m.bot]
+        offline = len([1 for i in mem if str(i.status) in ['offline', 'invisible']])
+        await Bot.get_channel(707349794296954991).edit(name=f"В сети: {len(mem) - offline}")
+        await Bot.get_channel(688702411249811460).edit(name=f"Участников: {len(mem)}")
+        await asyncio.sleep(10)
+
+@Bot.event
+async def on_ready():
+    Bot.loop.create_task(checkmem())
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
