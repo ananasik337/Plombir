@@ -33,7 +33,7 @@ async def инфо(ctx):
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Инструменты(Админ):tools:", colour= 0x8B8989)
     emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
-    emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**", inline=False)
+    emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**")
     emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**")
     emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**", inline=False)
     emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)   
@@ -41,6 +41,7 @@ async def инфо(ctx):
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
+    emb.add_field(name = "{}genpass".format(prefix), value= "**Генерирует случайный пароль**", inline=False)
     await ctx.send(embed= emb)
     
 
@@ -189,6 +190,20 @@ async def kick(ctx, member : discord.Member, reason=None):
         await ctx.send(f"{ctx.author.mention} Человек был успешно забанен!:white_check_mark:")
         await member.send(messageok)
         await member.kick(reason=reason)
+
+@Bot.command()
+async def genpass(ctx, lenght: int, number: int):
+    if not lenght or not number:
+        await ctx.send('Укажите длину и количество символов')
+    else:
+        chars = '1234567890!"№;%:?*()-_+=йцукенгшщзхъфывапролджэ\ячсмитьбю.qwertyuiopasdfghjkl:"|zxcvbnm,.<>?`~ЁёQWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗФЫВАПРОЛДЯЧСМИТЬ'
+
+        for x in range( number ):
+            password = ''
+
+            for i in range( lenght ):
+                password += random.choice( chars )
+            await ctx.author.send(embed = discord.Embed(description = f'{password}'))
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
