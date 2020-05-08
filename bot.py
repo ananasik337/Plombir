@@ -190,38 +190,48 @@ async def kick(ctx, member : discord.Member, reason=None):
         await member.send(messageok)
         await member.kick(reason=reason)
 
-rainbowrolename = "admin"         #не id а само название
-delay = 1      #вкулдаун между сменой роли
+
+from discord.ext import commands
+import asyncio
+import random
+
+ID_PITON_ROLE = 698511021886668900  # id своей роли
+ID_SERVER = 698510531538976799  # id своего сервера
 
 
-client = discord.Client()
-colours = [discord.Color.dark_orange(),discord.Color.orange(),discord.Color.dark_gold(),discord.Color.gold(),discord.Color.dark_magenta(),discord.Color.magenta(),discord.Color.red(),discord.Color.dark_red(),discord.Color.blue(),discord.Color.dark_blue(),discord.Color.teal(),discord.Color.dark_teal(),discord.Color.green(),discord.Color.dark_green(),discord.Color.purple(),discord.Color.dark_purple()]
+class Piton(commands.Cog):
 
-serverid = 698510531538976799
-async def rainbowrole(role):
-    for role in client.get_guild(serverid).roles:
-        if str(role) == str(rainbowrolename):
-            print("detected role")
-            while not client.is_closed():
+    def __init__(self, Bot):
+        self.Bot = Bot
+        self.colors = [0x3470a1, 0xffd340]
+        self.piton = ID_PITON_ROLE
+
+    @commands.command(aliases=['piton']) 
+    async def pidor (self, ctx, member: discord.Member = None):
+        member = ctx.author if member is None else member
+
+        emb = discord.Embed(description=f'Попался пидорист, {member.mention}')
+        emb.set_image(
+            url='https://cdn.discordapp.com/attachments/670981105993646080/703559372541788250/FuTjoi6vjr8.png')
+        emb.set_footer(text=f'Вызвал(a): {ctx.author.nick if ctx.author.nick else ctx.author.name}',
+                         icon_url=ctx.author.avatar_url)
+
+        await member.add_roles(self.piton)
+        return await ctx.send(embed=emb)
+
+        async def edit_color_role(self):
+          while not self.Bot.is_closed():
+            if len([m for m in self.Bot.get_guild(ID_SERVER).members if self.piton in m.roles]) > 1:
                 try:
-                    await role.edit(color=random.choice(colours))
+                    await self.piton.edit(colour=discord.Colour(random.choice(self.colors)))
+                    await asyncio.sleep(5)
                 except Exception:
-                    print("can't edit role, make sure the bot role is above the rainbow role and that is have the perms to edit roles")
-                    pass
-                await asyncio.sleep(delay)
-    print('role with the name "' + rainbowrolename +'" not found')
-    print("creating the role...")
-    try:
-        await client.get_guild(serverid).create_role(reason="Created rainbow role", name=rainbowrolename)
-        print("role created!")
-        await asyncio.sleep(2)
-        client.loop.create_task(rainbowrole(rainbowrolename))
-    except Exception as e:
-        print("couldn't create the role. Make sure the bot have the perms to edit roles")
-        print(e)
-        pass
-        await asyncio.sleep(10)
-        client.loop.create_task(rainbowrole(rainbowrolename))
+                    break
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        self.piton = self.Bot.get_guild(ID_SERVER).get_role(ID_PITON_ROLE)
+        self.Bot.loop.create_task(self.edit_color_role())
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
