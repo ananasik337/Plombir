@@ -191,19 +191,19 @@ async def kick(ctx, member : discord.Member, reason=None):
         await member.send(messageok)
         await member.kick(reason=reason)
 
-@Bot.command()
-async def genpass(ctx, lenght: int, number: int):
-    if not lenght or not number:
-        await ctx.send('Укажите длину и количество символов')
-    else:
-        chars = '1234567890!"№;%:?*()-_+=йцукенгшщзхъфывапролджэ\ячсмитьбю.qwertyuiopasdfghjkl:"|zxcvbnm,.<>?`~ЁёQWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗФЫВАПРОЛДЯЧСМИТЬ'
+#@Bot.command()
+#async def genpass(ctx, lenght: int, number: int):
+#    if not lenght or not number:
+#        await ctx.send('Укажите длину и количество символов')
+#    else:
+#        chars = '1234567890!"№;%:?*()-_+=йцукенгшщзхъфывапролджэячсмитьбю.qwertyuiopasdfghjkl:"|zxcvbnm,.<>?`~ЁёQWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗФЫВАПРОЛДЯЧСМИТЬ'
 
-        for x in range( number ):
-            password = ''
-
-            for i in range( lenght ):
-                password += random.choice( chars )
-            await ctx.author.send(embed = discord.Embed(description = f'{password}'))
+#        for x in range( number ):
+#            password = ''
+#
+#            for i in range( lenght ):
+#                password += random.choice( chars )
+#            await ctx.author.send(embed = discord.Embed(description = f'{password}'))
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
