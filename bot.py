@@ -190,48 +190,5 @@ async def kick(ctx, member : discord.Member, reason=None):
         await member.send(messageok)
         await member.kick(reason=reason)
 
-
-from discord.ext import commands
-import asyncio
-import random
-
-ID_PITON_ROLE = 698511021886668900  # id своей роли
-ID_SERVER = 698510531538976799  # id своего сервера
-
-
-class Piton(commands.Cog):
-
-    def __init__(self, Bot):
-        self.Bot = Bot
-        self.colors = [0x3470a1, 0xffd340]
-        self.piton = ID_PITON_ROLE
-
-    @commands.command(aliases=['piton']) 
-    async def pidor (self, ctx, member: discord.Member = None):
-        member = ctx.author if member is None else member
-
-        emb = discord.Embed(description=f'Попался пидорист, {member.mention}')
-        emb.set_image(
-            url='https://cdn.discordapp.com/attachments/670981105993646080/703559372541788250/FuTjoi6vjr8.png')
-        emb.set_footer(text=f'Вызвал(a): {ctx.author.nick if ctx.author.nick else ctx.author.name}',
-                         icon_url=ctx.author.avatar_url)
-
-        await member.add_roles(self.piton)
-        return await ctx.send(embed=emb)
-
-        async def edit_color_role(self):
-          while not self.Bot.is_closed():
-            if len([m for m in self.Bot.get_guild(ID_SERVER).members if self.piton in m.roles]) > 1:
-                try:
-                    await self.piton.edit(colour=discord.Colour(random.choice(self.colors)))
-                    await asyncio.sleep(5)
-                except Exception:
-                    break
-
-    @commands.Cog.listener()
-    async def on_ready(self):
-        self.piton = self.Bot.get_guild(ID_SERVER).get_role(ID_PITON_ROLE)
-        self.Bot.loop.create_task(self.edit_color_role())
-
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
