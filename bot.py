@@ -32,7 +32,7 @@ async def инфо(ctx):
     emb.add_field(name = "{}играть".format(prefix), value= "**В орел и решка**", inline=False)
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Инструменты(Админ):tools:", colour= 0x8B8989)
-    emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**")
+    emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**", inline=False)
     emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**")
     emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**")
     emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**", inline=False)
@@ -41,7 +41,7 @@ async def инфо(ctx):
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
-    emb.add_field(name = "{}genpass".format(prefix), value= "**Генерирует случайный пароль**", inline=False)
+    emb.add_field(name = "{}genpass".format(prefix), value= "**Генерирует случайный пароль** (Не работает)", inline=False)
     await ctx.send(embed= emb)
     
 
