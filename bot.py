@@ -35,7 +35,6 @@ async def инфо(ctx):
     emb.add_field(name = "{}очистить".format(prefix), value= "**Чистит чат от 1/10000**", inline=False)
     emb.add_field(name = "{}mute".format(prefix), value= "**Запретит участнику писать,говорить**")
     emb.add_field(name = "{}unmute".format(prefix), value= "**Разрешить участнику писать,говорить**")
-    emb.add_field(name = "{}say".format(prefix), value= "**Отправлять сообщение от имени бота(с упоминанием человека)**", inline=False)
     emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)   
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
@@ -86,16 +85,7 @@ async def unmute(ctx, member: discord.Member):
 async def диаслох(ctx):
     author = ctx.message.author
     await ctx.send(f"Полностью согласен с вашем мнением!:white_check_mark: {author.mention}")
-
-@Bot.command()
-async def диас(ctx, member : discord.Member = None):
-    author = ctx.message.author
-    user = ctx.message.author if (member == None) else member
-    await ctx.send(f"ЕБАННЫЙ НН СЛИТАЯ ХУЙНЯ! 5х5 Проебал, вантап гетнишь пмни {author.mention}")
-    embed = discord.Embed(title=f'Вызвано {user}', color=user.color)
-    embed.set_footer(text= f'Вызвано: {ctx.message.author}', icon_url= str(ctx.message.author.avatar_url))
-    embed.timestamp = datetime.datetime.utcnow()
-    await ctx.send(embed=embed)
+    
 @Bot.command()
 async def играть(ctx):
     """Играть с ботом"""
@@ -155,11 +145,6 @@ async def кнб(ctx, move: str = None):
         f"{winner}")
 
 @Bot.command()
-async def кнббан(ctx):
-    author = ctx.message.author
-    await ctx.send(f"{author.mention} ты **Выиграл**")
-
-@Bot.command()
 @commands.has_permissions(administrator = True)
 async def ban(ctx, member : discord.Member, reason=None):
     if reason == None:
@@ -190,20 +175,6 @@ async def kick(ctx, member : discord.Member, reason=None):
         await ctx.send(f"{ctx.author.mention} Человек был успешно забанен!:white_check_mark:")
         await member.send(messageok)
         await member.kick(reason=reason)
-
-#@Bot.command()
-#async def genpass(ctx, lenght: int, number: int):
-#    if not lenght or not number:
-#        await ctx.send('Укажите длину и количество символов')
-#    else:
-#        chars = '1234567890!"№;%:?*()-_+=йцукенгшщзхъфывапролджэячсмитьбю.qwertyuiopasdfghjkl:"|zxcvbnm,.<>?`~ЁёQWERTYUIOPASDFGHJKLZXCVBNMЙЦУКЕНГШЩЗФЫВАПРОЛДЯЧСМИТЬ'
-
-#        for x in range( number ):
-#            password = ''
-#
-#            for i in range( lenght ):
-#                password += random.choice( chars )
-#            await ctx.author.send(embed = discord.Embed(description = f'{password}'))
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
