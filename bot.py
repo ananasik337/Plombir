@@ -40,7 +40,6 @@ async def инфо(ctx):
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
-    emb.add_field(name = "{}genpass".format(prefix), value= "**Генерирует случайный пароль** (Не работает)", inline=False)
     await ctx.send(embed= emb)
     
 
