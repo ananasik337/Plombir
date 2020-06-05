@@ -13,8 +13,6 @@ import os
 from time import sleep
 import io
 import random as r
-from discord.utils import get
-import youtube_dl
 
 
 
@@ -208,7 +206,7 @@ async def play(ctx, url : str):
     except PermissionError:
         print('Не удалось удалить файл')
 
-    await ctx.send('Ожидайте')
+    await ctx.send('Секундочку бот загружает песню...')
     voice = get(Bot.voice_clients, guild = ctx.guild)
 
     ydl_opts = {
@@ -238,6 +236,11 @@ async def play(ctx, url : str):
 
 
 #------------------------------------------------------------------------------------------------------------------------#
+
+
+
+
+
 
 
 #------------------------------------------------------------------------------------------------------------------------#
