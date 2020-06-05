@@ -13,6 +13,10 @@ import io
 import random as r
 from discord.utils import get
 from discord.voice_client import VoiceClient
+import youtube_dl
+import ffmpeg
+from ffmpeg import *
+
 
 prefix = '!'
 
@@ -198,7 +202,7 @@ async def play(ctx, url : str):
     except PermissionError:
         print('Не удалось удалить файл')
 
-    await ctx.send('Секундочку бот загружает песню...')
+    await ctx.send('Секунду, бот загружает песню...')
     voice = get(Bot.voice_clients, guild = ctx.guild)
 
     ydl_opts = {
