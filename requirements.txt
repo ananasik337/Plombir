@@ -4,5 +4,3 @@ websockets
 chardet
 aiohttp
 asyncpg
-discord.py[voice]
-youtube-dl
