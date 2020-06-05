@@ -241,5 +241,26 @@ async def время(ctx):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
+#------------------------------------------------------------------------------------------------------------------------#
+@Bot.command()
+async def userinfo(ctx, Member: discord.Member = None ):
+    if not Member:
+        Member = ctx.author
+    roles = (role for role in Member.roles )
+    emb = discord.Embed(title='About: user..'.format(Member.name), description=f"Joined: {Member.joined_at.strftime('%b %#d, %Y')}\n\n "
+    f"Main nickname: {Member.name}\n\n"
+    
+   f"Custom Nickname: {Member.nick}\n\n"
+                                                                                      f"Status: {Member.status}\n\n"
+                                                                                      f"ID: {Member.id}\n\n"
+                                                                                      f"Main role: {Member.top_role}\n\n"
+                                                                                      f"Created: {Member.created_at.strftime('%b %#d, %Y')}", 
+                                                                                      color=0xff0000, timestamp=ctx.message.created_at)
+
+    emb.set_thumbnail(url= Member.avatar_url)
+    emb.set_footer(icon_url= Member.avatar_url)
+    emb.set_footer(text='Requested by: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
+    await ctx.send(embed=emb)
+#------------------------------------------------------------------------------------------------------------------------#
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
