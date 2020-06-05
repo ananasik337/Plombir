@@ -45,7 +45,7 @@ async def инфо(ctx):
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.event
 async def on_ready():
-    print('online!')
+    print('Очнулся после инсульта...')
     game = discord.Game(r"!инфо")
     await Bot.change_presence(status=discord.Status.online, activity=game)
 
@@ -229,6 +229,16 @@ async def kick(ctx, member : discord.Member, reason=None):
 
 
 #------------------------------------------------------------------------------------------------------------------------#
+
+@Bot.command()
+async def время(ctx):
+    emb = discord.Embed(title='Мск время', colour=discord.Colour.red(), url='https://www.timeserver.ru/cities/ru/moscow')
+    emb.set_author(name=Bot.user.name, icon_url=Bot.user.avatar_url)
+    emb.set_footer(text=ctx.author.name, icon_url=ctx.author.avatar_url)
+    emb.set_thumbnail(url='https://i.gifer.com/WnEJ.gif')
+    now_time = datetime.datetime.now()
+    emb.add_field(name='Time:', value=f'{now_time}'[:19])
+    await ctx.send(embed=emb)
 
 #------------------------------------------------------------------------------------------------------------------------#
 
