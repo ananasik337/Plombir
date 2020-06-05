@@ -1,9 +1,7 @@
 import discord
 from discord.ext import commands
-from discord.ext.commands import Bot
 import asyncio
 import random
-import bot
 from discord import client, guild, member
 from random import randint, choice
 import threading
@@ -14,7 +12,10 @@ from time import sleep
 import io
 import random as r
 from discord.utils import get
+from discord.voice_client import VoiceClient
 import youtube_dl
+import ffmpeg
+from ffmpeg import *
 
 
 prefix = '!'
