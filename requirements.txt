@@ -4,3 +4,4 @@ websockets
 chardet
 aiohttp
 asyncpg
+youtube-dl
