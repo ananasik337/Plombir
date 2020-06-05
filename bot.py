@@ -38,7 +38,7 @@ async def инфо(ctx):
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
-    emb.set_footer(text= 'опечатано By Kyddes', icon_url='https://imgur.com/1UjFajZ')
+    emb.set_footer(text= 'опечатано By Kyddes', icon_url='https://i.ibb.co/T2NxbPm/AVA-FINAL.jpg')
     emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
     
@@ -236,7 +236,7 @@ async def время(ctx):
     emb = discord.Embed(title='На данный момент в Москве', colour= 0xfbfcfe, url='https://time100.ru/Moscow')
     emb.set_thumbnail(url='https://i.gifer.com/WnEJ.gif')
     now_time = datetime.datetime.now()
-    emb.add_field(name='Время:', value=f'{now_time}'[:17])
+    emb.add_field(name='Время:', value=f'{now_time}'[:16])
     await ctx.send(embed=emb)
 
 #------------------------------------------------------------------------------------------------------------------------#
