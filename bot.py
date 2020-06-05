@@ -11,11 +11,7 @@ import os
 from time import sleep
 import io
 import random as r
-from discord.utils import get
-from discord.voice_client import VoiceClient
-import youtube_dl
-import ffmpeg
-from ffmpeg import *
+
 
 
 prefix = '!'
@@ -192,42 +188,43 @@ async def kick(ctx, member : discord.Member, reason=None):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command()
-async def play(ctx, url : str):
-    song_there = os.path.isfile('song.mp3')
+#@Bot.command()
+#async def play(ctx, url : str):
+#    song_there = os.path.isfile('song.mp3')
+#
+#    try:
+#        if song_there:
+#            os.remove('song.mp3')
+#    except PermissionError:
+#        print('Не удалось удалить файл')
+#
+#
+#    await ctx.send('Секунду, бот загружает песню...')
+#    voice = get(Bot.voice_clients, guild = ctx.guild)
 
-    try:
-        if song_there:
-            os.remove('song.mp3')
-    except PermissionError:
-        print('Не удалось удалить файл')
+#    ydl_opts = {
+#        'format' : 'bestaudio/best',
+#        'postprocessors' : [{
+#            'key' : 'FFmpegExctractAudio',
+#            'preferredcodec' : 'mp3',
+#           'preferredquality' : '192'
+#        }]
+#    }
 
-    await ctx.send('Секунду, бот загружает песню...')
-    voice = get(Bot.voice_clients, guild = ctx.guild)
+#    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+#        ydl.download([url])
+#
+#    for file in os.listdir('./'):
+# #       if file.endswith('.mp3'):
+#            name = file
+#            os.rename(file, 'song.mp3')
 
-    ydl_opts = {
-        'format' : 'bestaudio/best',
-        'postprocessors' : [{
-            'key' : 'FFmpegExctractAudio',
-            'preferredcodec' : 'mp3',
-            'preferredquality' : '192'
-        }]
-    }
+#    voice.play(discord.FFmpegPCMAudio('song.mp3'))
+#    voice.source = discord.PCMVolumeTransformer(voice.source)
+#    voice.source.volume = 0.07
 
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-
-    for file in os.listdir('./'):
-        if file.endswith('.mp3'):
-            name = file
-            os.rename(file, 'song.mp3')
-
-    voice.play(discord.FFmpegPCMAudio('song.mp3'))
-    voice.source = discord.PCMVolumeTransformer(voice.source)
-    voice.source.volume = 0.07
-
-    song_name = name.rsplit('-', 2)
-    await ctx.send(f'Сейчас играет: {song_name[0]}')
+ #   song_name = name.rsplit('-', 2)
+ #   await ctx.send(f'Сейчас играет: {song_name[0]}')
 
 
 
