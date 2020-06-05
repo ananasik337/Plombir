@@ -44,12 +44,14 @@ async def инфо(ctx):
     await ctx.send(embed= emb)
     
 
-
+#------------------------------------------------------------------------------------------------------------------------#
 @Bot.event
 async def on_ready():
     print('online!')
     game = discord.Game(r"!инфо")
     await Bot.change_presence(status=discord.Status.online, activity=game)
+
+#------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.event
 async def on_member_join(member):
@@ -58,12 +60,16 @@ async def on_member_join(member):
     await member.add_roles(role)
     await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` присоеденился📢''', color=0x0c0c0c))
 
+#------------------------------------------------------------------------------------------------------------------------#
+
 @Bot.event
 async def on_member_remove(member):
     channel = Bot.get_channel(698660443291385906)
     role = discord.utils.get(member.guild.roles, id= 698514876313894993)
     await member.remove_roles(role)
     await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` отключился📢''', color=0x0c0c0c))
+
+#------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
@@ -73,6 +79,8 @@ async def mute(ctx, member: discord.Member):
     author = ctx.message.author
     await ctx.send(f"Человек был успешно замучен!:white_check_mark: {author.mention}")
 
+#------------------------------------------------------------------------------------------------------------------------#
+
 @Bot.command()
 @commands.has_permissions(administrator= True)
 async def unmute(ctx, member: discord.Member):
@@ -81,11 +89,8 @@ async def unmute(ctx, member: discord.Member):
     author = ctx.message.author
     await ctx.send(f"Человек был успешно размучен!:white_check_mark: {author.mention}")
 
-@Bot.command()
-async def диаслох(ctx):
-    author = ctx.message.author
-    await ctx.send(f"Полностью согласен с вашем мнением!:white_check_mark: {author.mention}")
-    
+#------------------------------------------------------------------------------------------------------------------------#
+
 @Bot.command()
 async def играть(ctx):
     """Играть с ботом"""
@@ -96,6 +101,8 @@ async def играть(ctx):
     if(num == 2):    
            await ctx.send("Вам выпала :yen: Решка")
            print("[?coin - done")
+
+#------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command(pass_context = True)
 @commands.has_permissions(administrator = True)
@@ -121,6 +128,9 @@ class Messages:
                 except (discord.Forbidden, discord.HTTPException):
                     continue
         return n_messages
+
+#------------------------------------------------------------------------------------------------------------------------#
+
 @Bot.command(name = "стат")
 async def num_msg(ctx, member: discord.Member = None):
     """Счетчик сообщний"""
@@ -128,7 +138,9 @@ async def num_msg(ctx, member: discord.Member = None):
     number = await Messages(Bot).number_messages(user)
     embed = discord.Embed(description = f"Количество сообщений на сервере от **{user.name}** — **{number}**!")
     await ctx.send(embed = embed)
-    
+
+#------------------------------------------------------------------------------------------------------------------------#
+
 @Bot.command()
 async def кнб(ctx, move: str = None):
     solutions = ["`ножницы`", "`камень`", "`бумага`"]
@@ -144,6 +156,8 @@ async def кнб(ctx, move: str = None):
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
+#------------------------------------------------------------------------------------------------------------------------#
+
 @Bot.command()
 @commands.has_permissions(administrator = True)
 async def ban(ctx, member : discord.Member, reason=None):
@@ -155,6 +169,8 @@ async def ban(ctx, member : discord.Member, reason=None):
         await member.send(messageok)
         await member.ban(reason=reason)
 
+#------------------------------------------------------------------------------------------------------------------------#
+
 @Bot.command()
 async def аватар(ctx, member : discord.Member = None):
     user = ctx.message.author if (member == None) else member
@@ -164,6 +180,8 @@ async def аватар(ctx, member : discord.Member = None):
     embed.set_image(url=user.avatar_url)
     embed.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed=embed)
+
+#------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command()
 @commands.has_permissions(administrator = True)
@@ -175,6 +193,8 @@ async def kick(ctx, member : discord.Member, reason=None):
         await ctx.send(f"{ctx.author.mention} Человек был успешно забанен!:white_check_mark:")
         await member.send(messageok)
         await member.kick(reason=reason)
+
+#------------------------------------------------------------------------------------------------------------------------#
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
