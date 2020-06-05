@@ -240,6 +240,7 @@ async def play(ctx, url : str):
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
 async def join(ctx):
+    global voice
     channel = ctx.message.author.voice.channel
     voice = get(Bot.voice_clients, guild = ctx.guild)
 
