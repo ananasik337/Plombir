@@ -258,7 +258,6 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
                                                                                       color= 0x00FFFF, timestamp=ctx.message.created_at)
 
     emb = discord.Embed(title=f'Аватар пользователя {user}', description= f'[Изображение]({user.avatar_url})', color= 0x00FFFF)
-    emb.set_image(url=user.avatar_url)
     emb.set_thumbnail(url= Member.avatar_url)
     emb.set_footer(icon_url= Member.avatar_url)
     emb.set_footer(text='Создано: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
