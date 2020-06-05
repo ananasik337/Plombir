@@ -236,13 +236,30 @@ async def play(ctx, url : str):
 
 
 #------------------------------------------------------------------------------------------------------------------------#
+@bot.command(pass_context = True, aliases=['j','J','join','Join'])
+async def join_vc(ctx):
+    channel = ctx.message.author.voice.channel
+    global voice
+    voice = discord.utils.get(bot.voice_clients)
+
+    if voice and voice.is_connected():
+        await voice.move_to(channel)
+    else:
+        voice = await channel.connect()
+        await ctx.send(f"Successfully connected!")
 
 
+@bot.command(pass_context = True, aliases = ['d','D','dis','Dis','Disconnect','disconnect'])
 
+async def disconnect_vc(ctx):
 
+    for x in bot.voice_clients:
 
+        if(x.guild == ctx.message.guild):
 
+            await ctx.send("Bye!")
 
+            return await x.disconnect()
 #------------------------------------------------------------------------------------------------------------------------#
 
 token = os.environ.get('BOT_TOKEN')
