@@ -13,9 +13,6 @@ import io
 import random as r
 from discord.utils import get
 from discord.voice_client import VoiceClient
-import ffmpeg
-from ffmpeg import *
-
 
 prefix = '!'
 
