@@ -233,10 +233,10 @@ async def kick(ctx, member : discord.Member, reason=None):
 
 @Bot.command()
 async def время(ctx):
-    emb = discord.Embed(title='На данный момент в Москве', colour= 0xfbfcfe, url='https://www.timeserver.ru/cities/ru/moscow')
+    emb = discord.Embed(title='На данный момент в Москве', colour= 0xfbfcfe, url='https://time100.ru/?/')
     emb.set_thumbnail(url='https://i.gifer.com/WnEJ.gif')
     now_time = datetime.datetime.now()
-    emb.add_field(name='Время:', value=f'{now_time}'[:24])
+    emb.add_field(name='Время:', value=f'{now_time}'[:19])
     await ctx.send(embed=emb)
 
 #------------------------------------------------------------------------------------------------------------------------#
