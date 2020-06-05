@@ -13,6 +13,8 @@ import os
 from time import sleep
 import io
 import random as r
+from discord.utils import get
+import youtube_dl
 
 
 
@@ -196,5 +198,71 @@ async def kick(ctx, member : discord.Member, reason=None):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
+@Bot.command()
+async def play(ctx, url : str):
+    song_there = os.path.isfile('song.mp3')
+
+    try:
+        if song_there:
+            os.remove('song.mp3')
+    except PermissionError:
+        print('Не удалось удалить файл')
+
+    await ctx.send('Ожидайте')
+    voice = get(Bot.voice_clients, guild = ctx.guild)
+
+    ydl_opts = {
+        'format' : 'bestaudio/best',
+        'postprocessors' : [{
+            'key' : 'FFmpegExctractAudio',
+            'preferredcodec' : 'mp3',
+            'preferredquality' : '192'
+        }]
+    }
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+
+    for file in os.listdir('./'):
+        if file.endswith('.mp3'):
+            name = file
+            os.rename(file, 'song.mp3')
+
+    voice.play(discord.FFmpegPCMAudio('song.mp3'))
+    voice.source = discord.PCMVolumeTransformer(voice.source)
+    voice.source.volume = 0.07
+
+    song_name = name.rsplit('-', 2)
+    await ctx.send(f'Сейчас играет: {song_name[0]}')
+
+
+
+#------------------------------------------------------------------------------------------------------------------------#
+@Bot.command()
+async def join(ctx):
+    global voice
+    channel = ctx.message.author.voice.channel
+    voice = get(Bot.voice_clients, guild = ctx.guild)
+
+    if voice and voice.is_connected():
+        await voice.move_to(channel)
+    else:
+        voice = await channel.connect()
+        await ctx.send(f'Бот присоеденился к каналу: {channel}')
+
+@Bot.command()
+async def leave(ctx):
+    channel = ctx.message.author.voice.channel
+    voice = get(Bot.voice_clients, guild = ctx.guild)
+
+    if voice and voice.is_connected():
+        await voice.disconnect()
+    else:
+        voice = await channel.connect()
+        await ctx.send(f'Бот отключился от канала: {channel}')
+
+
+
+#------------------------------------------------------------------------------------------------------------------------#
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
