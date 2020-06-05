@@ -38,6 +38,7 @@ async def инфо(ctx):
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
+    emb.set_footer(text=ctx.author.name, icon_url=ctx.author.avatar_url)
     emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
     
@@ -232,12 +233,11 @@ async def kick(ctx, member : discord.Member, reason=None):
 
 @Bot.command()
 async def время(ctx):
-    emb = discord.Embed(title='Мск время', colour=discord.Colour.red(), url='https://www.timeserver.ru/cities/ru/moscow')
+    emb = discord.Embed(title='На данный момент в Москве', colour= 0xfbfcfe, url='https://www.timeserver.ru/cities/ru/moscow')
     emb.set_author(name=Bot.user.name, icon_url=Bot.user.avatar_url)
-    emb.set_footer(text=ctx.author.name, icon_url=ctx.author.avatar_url)
     emb.set_thumbnail(url='https://i.gifer.com/WnEJ.gif')
     now_time = datetime.datetime.now()
-    emb.add_field(name='Time:', value=f'{now_time}'[:19])
+    emb.add_field(name='Время:', value=f'{now_time}'[:19])
     await ctx.send(embed=emb)
 
 #------------------------------------------------------------------------------------------------------------------------#
