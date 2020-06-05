@@ -243,7 +243,8 @@ async def время(ctx):
 
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
-async def userinfo(ctx, Member: discord.Member = None ):
+async def userinfo(ctx, Member: discord.Member = None, member : discord.Member = None):
+    user = ctx.message.author if (member == None) else member
     if not Member:
         Member = ctx.author
     roles = (role for role in Member.roles )
@@ -251,12 +252,13 @@ async def userinfo(ctx, Member: discord.Member = None ):
     f"Основной никнаме: {Member.name}\n\n"
     
    f"Кастомный никнейм: {Member.nick}\n\n"
-                                                                                      f"Статус: {Member.status}\n\n"
                                                                                       f"Айди: {Member.id}\n\n"
                                                                                       f"Основная роль: {Member.top_role}\n\n"
                                                                                       f"В дискорде с: {Member.created_at.strftime('%b %#d, %Y')}", 
                                                                                       color= 0x00FFFF, timestamp=ctx.message.created_at)
 
+    emb = discord.Embed(title=f'Аватар пользователя {user}', description= f'[Изображение]({user.avatar_url})', color= 0x00FFFF)
+    emb.set_image(url=user.avatar_url)
     emb.set_thumbnail(url= Member.avatar_url)
     emb.set_footer(icon_url= Member.avatar_url)
     emb.set_footer(text='Создано: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
