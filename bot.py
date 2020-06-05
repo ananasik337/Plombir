@@ -13,7 +13,8 @@ import os
 from time import sleep
 import io
 import random as r
-
+from discord.utils import get
+import youtube_dl
 
 
 prefix = '!'
@@ -101,9 +102,7 @@ async def играть(ctx):
     if(num == 2):    
            await ctx.send("Вам выпала :yen: Решка")
            print("[?coin - done")
-
 #------------------------------------------------------------------------------------------------------------------------#
-
 @Bot.command(pass_context = True)
 @commands.has_permissions(administrator = True)
 async def очистить(ctx, amount = 1000):
@@ -128,9 +127,7 @@ class Messages:
                 except (discord.Forbidden, discord.HTTPException):
                     continue
         return n_messages
-
 #------------------------------------------------------------------------------------------------------------------------#
-
 @Bot.command(name = "стат")
 async def num_msg(ctx, member: discord.Member = None):
     """Счетчик сообщний"""
@@ -138,9 +135,7 @@ async def num_msg(ctx, member: discord.Member = None):
     number = await Messages(Bot).number_messages(user)
     embed = discord.Embed(description = f"Количество сообщений на сервере от **{user.name}** — **{number}**!")
     await ctx.send(embed = embed)
-
 #------------------------------------------------------------------------------------------------------------------------#
-
 @Bot.command()
 async def кнб(ctx, move: str = None):
     solutions = ["`ножницы`", "`камень`", "`бумага`"]
