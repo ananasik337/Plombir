@@ -38,7 +38,7 @@ async def инфо(ctx):
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
-    emb.set_footer(text=ctx.author.name, icon_url=ctx.author.avatar_url)
+    emb.set_footer(text= 'опечатано By Kyddes', icon_url='https://imgur.com/1UjFajZ')
     emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
     
