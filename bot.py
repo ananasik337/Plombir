@@ -62,7 +62,7 @@ async def on_member_join(member):
 #------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.event
-async def on_member_remove(member):
+async def on_member_leave(member):
     channel = Bot.get_channel(718334608026107994)
     role = discord.utils.get(member.guild.roles, id= 6713476531300860055)
     await member.remove_roles(role)
