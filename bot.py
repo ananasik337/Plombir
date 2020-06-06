@@ -262,7 +262,7 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
     await ctx.send(embed=emb)
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.event
+@client.event
 async def on_message(self, message):
     bad_words = ['Говно сервак', 'говно сервер', 'параша', 'сервер для детей', 'создатель уебок', 'тут нет самописа']
     for words in bad_words:
@@ -270,12 +270,6 @@ async def on_message(self, message):
             await message.channel.send('Зафиксировано оскорбление сервера')
 
 #------------------------------------------------------------------------------------------------------------------------#
-
-
-
-
-
-
 
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
