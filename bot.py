@@ -256,10 +256,26 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
                                                                                       f"В дискорде с: {Member.created_at.strftime('%b %#d, %Y')}", 
                                                                                       color= 0x00FFFF, timestamp=ctx.message.created_at)
 
-    emb.set_thumbnail(url= Member.avatar_url)
+    emb.set_thumbnail(url='https://i.ibb.co/Cv1x9nk/ccqu-Fz2y2-MQ.jpg')
     emb.set_footer(icon_url= Member.avatar_url)
     emb.set_footer(text='Создано: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
     await ctx.send(embed=emb)
 #------------------------------------------------------------------------------------------------------------------------#
+
+@Bot.event
+async def on_message(self, message):
+    bad_words = ['Говно сервак', 'говно сервер', 'параша', 'сервер для детей', 'создатель уебок', 'тут нет самописа']
+    for words in bad_words:
+        if words in message.content:
+            await message.channel.send('Зафиксировано оскорбление сервера')
+
+#------------------------------------------------------------------------------------------------------------------------#
+
+
+
+
+
+
+
 token = os.environ.get('BOT_TOKEN')
 Bot.run(str(token))
