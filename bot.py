@@ -220,7 +220,7 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
                                                                                       f"В дискорде с: {Member.created_at.strftime('%b %#d, %Y')}", 
                                                                                       color= 0xEE82EE, timestamp=ctx.message.created_at)
 
-    emb.set_footer(icon_url= Member.avatar_url)
+    emb.set_footer(icon_url= str(ctx.message.author.avatar_url))
     emb.set_footer(icon_url= Member.avatar_url)
     emb.set_footer(text='Создано: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
     await ctx.send(embed=emb)
