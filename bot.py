@@ -190,43 +190,6 @@ async def kick(ctx, member : discord.Member, reason=None):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-#@Bot.command()
-#async def play(ctx, url : str):
-#    song_there = os.path.isfile('song.mp3')
-#
-#    try:
-#        if song_there:
-#            os.remove('song.mp3')
-#    except PermissionError:
-#        print('Не удалось удалить файл')
-#
-#
-#    await ctx.send('Секунду, бот загружает песню...')
-#    voice = get(Bot.voice_clients, guild = ctx.guild)
-
-#    ydl_opts = {
-#        'format' : 'bestaudio/best',
-#        'postprocessors' : [{
-#            'key' : 'FFmpegExctractAudio',
-#            'preferredcodec' : 'mp3',
-#           'preferredquality' : '192'
-#        }]
-#    }
-
-#    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-#        ydl.download([url])
-#
-#    for file in os.listdir('./'):
-# #       if file.endswith('.mp3'):
-#            name = file
-#            os.rename(file, 'song.mp3')
-
-#    voice.play(discord.FFmpegPCMAudio('song.mp3'))
-#    voice.source = discord.PCMVolumeTransformer(voice.source)
-#    voice.source.volume = 0.07
-
- #   song_name = name.rsplit('-', 2)
- #   await ctx.send(f'Сейчас играет: {song_name[0]}')
 
 
 
@@ -255,9 +218,9 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
                                                                                       f"Айди: {Member.id}\n\n"
                                                                                       f"Основная роль: {Member.top_role}\n\n"
                                                                                       f"В дискорде с: {Member.created_at.strftime('%b %#d, %Y')}", 
-                                                                                      color= 0x00FFFF, timestamp=ctx.message.created_at)
+                                                                                      color= 0xEE82EE, timestamp=ctx.message.created_at)
 
-    emb.set_thumbnail(url='https://i.ibb.co/Cv1x9nk/ccqu-Fz2y2-MQ.jpg')
+    emb.set_footer(icon_url= Member.avatar_url)
     emb.set_footer(icon_url= Member.avatar_url)
     emb.set_footer(text='Создано: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
     await ctx.send(embed=emb)
