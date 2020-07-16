@@ -58,7 +58,7 @@ async def on_member_join(member):
     channel = Bot.get_channel(723117040327721074)
     role = discord.utils.get(member.guild.roles, id=723116837994496110)
     await member.add_roles(role)
-    await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` присоеденился📢''', color=0x0c0c0c))
+    await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` присоеденился📢''', color=0x009cd1))
 
 #------------------------------------------------------------------------------------------------------------------------#
 
@@ -67,7 +67,7 @@ async def on_member_leave(member):
     channel = Bot.get_channel(718334608026107994)
     role = discord.utils.get(member.guild.roles, id=723116837994496110)
     await member.remove_roles(role)
-    await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` отключился📢''', color=0x0c0c0c))
+    await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` отключился📢''', color=0x009cd1))
 
 #------------------------------------------------------------------------------------------------------------------------#
 
