@@ -36,7 +36,7 @@ async def инфо(ctx):
     emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)   
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
-    emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
+    emb.add_field(name = "{}стата".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
     emb.add_field(name = "{}userinfo".format(prefix), value= "**Показывает всю информацию о пользователе!**", inline=False)
     emb.add_field(name = "{}wiki".format(prefix), value= "**Википедия**", inline=False)
@@ -128,8 +128,8 @@ class Messages:
                     continue
         return n_messages
 #------------------------------------------------------------------------------------------------------------------------#
-@Bot.command(name = "стат")
-async def num_msg(ctx, member: discord.Member = None):
+@Bot.command()
+async def стата(ctx, member: discord.Member = None):
     """Счетчик сообщний"""
     user = ctx.message.author if (member == None) else member
     number = await Messages(Bot).number_messages(user)
@@ -166,7 +166,7 @@ async def ban(ctx, member : discord.Member, reason=None):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command(name = "avatar, avatarka")
+@Bot.command()
 async def аватар(ctx, member : discord.Member = None):
     user = ctx.message.author if (member == None) else member
     await ctx.message.delete()
