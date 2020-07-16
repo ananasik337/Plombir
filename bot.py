@@ -39,6 +39,7 @@ async def инфо(ctx):
     emb.add_field(name = "{}стат".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
     emb.add_field(name = "{}userinfo".format(prefix), value= "**Показывает всю информацию о пользователе!**", inline=False)
+    emb.add_field(name = "{}wiki".format(prefix), value= "**Википедия**", inline=False)
     emb.set_footer(text= 'опечатано 2020 © Kyddes', icon_url='https://i.ibb.co/T2NxbPm/AVA-FINAL.jpg')
     emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
