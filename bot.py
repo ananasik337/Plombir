@@ -204,7 +204,7 @@ async def wiki(ctx, *, args):
     emb.add_field(name="Для полного ознакомления со статьей, перейдите по ссылке:", value=f"[Ссылочка]({new_page.url})")
     await ctx.send(embed=emb)
   except Exception:
-    return await ctx.send('Неоднозначный аргумент, уточните статью', delete_after=10)
+    return await ctx.send('Неоднозначный аргумент, уточните статью', delete_after=5)
 
 #------------------------------------------------------------------------------------------------------------------------#
 
