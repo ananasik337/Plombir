@@ -190,8 +190,20 @@ async def kick(ctx, member : discord.Member, reason=None):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-
-
+import wikipedia
+@Bot.command()
+async def wiki(ctx, *, args):
+  try:
+    wikipedia.set_lang("ru")
+    new_page = wikipedia.page(f'{args}')
+    summ = wikipedia.summary(f'{args}', sentences=5)
+    emb = discord.Embed(title=new_page.title,
+                        description=f"{summ}",
+                        color=0xc582ff)
+    emb.add_field(name="Для полного ознакомления со статьей, перейдите по ссылке:", value=f"[M]({new_page.url})")
+    await ctx.send(embed=emb)
+  except Exception:
+    return await ctx.send('Неоднозначный аргумент, уточните статью', delete_after=10)
 
 #------------------------------------------------------------------------------------------------------------------------#
 
