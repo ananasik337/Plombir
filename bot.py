@@ -36,7 +36,6 @@ async def инфо(ctx):
     emb.add_field(name = "{}ban".format(prefix),  value= "**Банит участника**", inline=False)   
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Плюшки:smiling_face_with_3_hearts:", colour= 0x8B8989)
-    emb.add_field(name = "{}стата".format(prefix), value= "**Просмотр своей(чужой) статистики сообщений**")
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
     emb.add_field(name = "{}userinfo".format(prefix), value= "**Показывает всю информацию о пользователе!**", inline=False)
     emb.add_field(name = "{}wiki".format(prefix), value= "**Википедия**", inline=False)
@@ -128,13 +127,19 @@ class Messages:
                     continue
         return n_messages
 #------------------------------------------------------------------------------------------------------------------------#
-@Bot.command()
-async def стата(ctx, member: discord.Member = None):
-    """Счетчик сообщний"""
-    user = ctx.message.author if (member == None) else member
-    number = await Messages(Bot).number_messages(user)
-    embed = discord.Embed(description = f"Количество сообщений на сервере от **{user.name}** — **{number}**!")
-    await ctx.send(embed = embed)
+
+@Bot.command(pass_context=True, name= 'ping', brief= 'Показать текущую задержку')
+@commands.cooldown(1, 1, commands.BucketType.user)
+async def ping(ctx):
+        try:
+            await ctx.message.delete()
+        except:
+            pass
+        em = discord.Embed(title= '**Текущая задержка:**', description= f'``{Bot.ws.latency * 1000:.0f} ms``', color= colors[2])
+        em.set_author(name= f'Ping', icon_url= self.Bot.user.avatar_url)
+        em.set_footer(text= f'{ctx.author}', icon_url= ctx.author.avatar_url)
+        await ctx.send(embed=em)
+
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
 async def кнб(ctx, move: str = None):
@@ -209,11 +214,11 @@ async def wiki(ctx, *, args):
 #------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command()
-async def стас(ctx, member : discord.Member):
- messageok = f"Молодец! Ты нашел посхалку!"   
- await ctx.message.delete()
- await ctx.send(f"{ctx.author.mention} https://i.ibb.co/1QYjpKJ/image0.jpg")
- await member.send(messageok)
+async def стас(ctx, member : discord.Member):  
+    await ctx.message.delete()
+    await ctx.send(f"{ctx.author.mention} https://i.ibb.co/1QYjpKJ/image0.jpg")
+    messageok = f"Молодец! Ты нашел посхалку!" 
+    await member.send(messageok)
 
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
