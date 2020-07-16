@@ -200,22 +200,14 @@ async def wiki(ctx, *, args):
     emb = discord.Embed(title=new_page.title,
                         description=f"{summ}",
                         color=0xc582ff)
-    emb.add_field(name="Для полного ознакомления со статьей, перейдите по ссылке:", value=f"[M]({new_page.url})")
+    emb.add_field(name="Для полного ознакомления со статьей, перейдите по ссылке:", value=f"[Ссылочка]({new_page.url})")
     await ctx.send(embed=emb)
   except Exception:
     return await ctx.send('Неоднозначный аргумент, уточните статью', delete_after=10)
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command()
-async def время(ctx):
-    emb = discord.Embed(title='На данный момент в Москве', colour= 0xfbfcfe, url='https://time100.ru/Moscow')
-    emb.set_thumbnail(url='https://i.gifer.com/WnEJ.gif')
-    now_time = datetime.datetime.now()
-    emb.add_field(name='Время:', value=f'{now_time}'[:16])
-    await ctx.send(embed=emb)
 
-#------------------------------------------------------------------------------------------------------------------------#
 
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
