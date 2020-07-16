@@ -166,7 +166,7 @@ async def ban(ctx, member : discord.Member, reason=None):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command(name = "avatar","avatarka")
+@Bot.command(name = "avatar, avatarka")
 async def аватар(ctx, member : discord.Member = None):
     user = ctx.message.author if (member == None) else member
     await ctx.message.delete()
