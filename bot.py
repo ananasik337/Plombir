@@ -128,17 +128,6 @@ class Messages:
         return n_messages
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command(pass_context=True, name= 'ping', brief= 'Показать текущую задержку')
-@commands.cooldown(1, 1, commands.BucketType.user)
-async def ping(ctx):
-        try:
-            await ctx.message.delete()
-        except:
-            pass
-        em = discord.Embed(title= '**Текущая задержка:**', description= f'``{Bot.ws.latency * 1000:.0f} ms``', color= colors[2])
-        em.set_author(name= f'Ping', icon_url= self.Bot.user.avatar_url)
-        em.set_footer(text= f'{ctx.author}', icon_url= ctx.author.avatar_url)
-        await ctx.send(embed=em)
 
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
@@ -216,9 +205,7 @@ async def wiki(ctx, *, args):
 @Bot.command()
 async def стас(ctx, member : discord.Member):  
     await ctx.message.delete()
-    await ctx.send(f"{ctx.author.mention} https://i.ibb.co/1QYjpKJ/image0.jpg")
-    messageok = f"Молодец! Ты нашел посхалку!" 
-    await member.send(messageok)
+    await ctx.send(f"{ctx.author.mention} https://i.ibb.co/1QYjpKJ/image0.jpg", "Молодец, ты нашел пасхалку!")
 
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
