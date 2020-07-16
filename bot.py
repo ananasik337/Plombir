@@ -200,7 +200,7 @@ async def wiki(ctx, *, args):
     summ = wikipedia.summary(f'{args}', sentences=5)
     emb = discord.Embed(title=new_page.title,
                         description=f"{summ}",
-                        color=0xc582ff)
+                        color=0xEE82EE)
     emb.add_field(name="Для полного ознакомления со статьей, перейдите по ссылке:", value=f"[Ссылочка]({new_page.url})")
     await ctx.send(embed=emb)
   except Exception:
