@@ -75,7 +75,7 @@ async def on_member_leave(member):
 @Bot.command()
 @commands.has_permissions(administrator= True)
 async def mute(ctx, member: discord.Member):
-    mute_role = discord.utils.get(ctx.message.guild.roles, name= "Мут")
+    mute_role = discord.utils.get(ctx.message.guild.roles, name= "Mute")
     await member.add_roles(mute_role)
     author = ctx.message.author
     await ctx.send(f"Человек был успешно замучен!:white_check_mark: {author.mention}")
@@ -85,7 +85,7 @@ async def mute(ctx, member: discord.Member):
 @Bot.command()
 @commands.has_permissions(administrator= True)
 async def unmute(ctx, member: discord.Member):
-    mute_role = discord.utils.get(ctx.message.guild.roles, name= "Мут")
+    mute_role = discord.utils.get(ctx.message.guild.roles, name= "Mute")
     await member.remove_roles(mute_role)
     author = ctx.message.author
     await ctx.send(f"Человек был успешно размучен!:white_check_mark: {author.mention}")
