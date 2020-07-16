@@ -208,7 +208,12 @@ async def wiki(ctx, *, args):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-
+@Bot.command()
+async def стас(ctx, member : discord.Member):
+ messageok = f"Молодец! Ты нашел посхалку!"   
+ await ctx.message.delete()
+ await ctx.send(f"{ctx.author.mention} https://i.ibb.co/1QYjpKJ/image0.jpg")
+ await member.send(messageok)
 
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
