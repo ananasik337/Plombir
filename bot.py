@@ -39,7 +39,7 @@ async def инфо(ctx):
     emb.add_field(name = "{}аватар".format(prefix), value= "**Показ автарки указанного участника**", inline=False)
     emb.add_field(name = "{}userinfo".format(prefix), value= "**Показывает всю информацию о пользователе!**", inline=False)
     emb.add_field(name = "{}wiki".format(prefix), value= "**Википедия**", inline=False)
-    emb.set_footer(text= 'опечатано 2020 © Jutix',text= 'сайт автора jutix.xyz', icon_url='https://i.ibb.co/0n03k4G/ava.png')
+    emb.set_footer(text= 'сайт автора jutix.xyz опечатано 2020 ©', icon_url='https://i.ibb.co/0n03k4G/ava.png')
     emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
     
