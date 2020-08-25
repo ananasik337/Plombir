@@ -55,8 +55,7 @@ async def on_ready():
 
 @Bot.event
 async def on_member_join(member):
-    channel = Bot.get_channel(723117040327721074)
-    role = discord.utils.get(member.guild.roles, id=741329019198242897)
+    channel = Bot.get_channel(741329019198242897)
     await member.add_roles(role)
     await channel.send(embed = discord.Embed(description = f'''📢Пользователь ``{member}`` присоеденился📢''', color=0x009cd1))
 
