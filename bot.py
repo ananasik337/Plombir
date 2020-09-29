@@ -217,7 +217,7 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
 #------------------------------------------------------------------------------------------------------------------------#
 
 
-@bot.event()  
+@Bot.command()  
 #@commands.Cog.listener()
 async def on_raw_reaction_add(payload: RawReactionActionEvent):
     if not payload.message_id == 760572514384216066:  # ID сообщения на которое нужно ставить реакции
