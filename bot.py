@@ -217,15 +217,15 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
 #------------------------------------------------------------------------------------------------------------------------#
 
 
-@Bot.command()  
+@Bot.event
 #@commands.Cog.listener()
 async def on_raw_reaction_add(payload: RawReactionActionEvent):
-    if not payload.message_id == 760572514384216066:  # ID сообщения на которое нужно ставить реакции
+    if not payload.message_id == 857981710616755024:  # ID сообщения на которое нужно ставить реакции
         return
     if not payload.emoji.id == 590075717724733845:  # или payload.emoji.name == "✔" для unicode-эмодзей
         return
     if member := payload.member:
-        await member.add_roles(member.guild.get_role(698627093675900929))
+        await member.add_roles(member.guild.get_role(785342162242088823))
         
 #------------------------------------------------------------------------------------------------------------------------#
 
