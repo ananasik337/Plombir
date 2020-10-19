@@ -146,6 +146,30 @@ async def ban(ctx, member : discord.Member, reason=None):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
+@Bot.command( pass_context = True )
+
+async def unban( ctx, *, member ):
+    await ctx.channel.purge( limit = 1 )
+
+    banned_useres = await ctx.guild.band()
+
+    for ban_entry in banned_users:
+        user = ban_entry.user
+
+        await ctx.guild.unban( user )
+        await ctx.send( f'The person was successfully banned!:white_check_mark:{ user.mention }')
+        
+#------------------------------------------------------------------------------------------------------------------------# 
+
+@Bot.command()
+async def tempban(ctx, member:discord.Member, seconds:int):
+  await ctx.send(f'User {member.name} got banned on {seconds} second')
+  await member.ban()
+  await asyncio.sleep(seconds)
+  await member.unban()
+
+#------------------------------------------------------------------------------------------------------------------------# 
+    
 @Bot.command()
 async def avatar(ctx, member : discord.Member = None):
     user = ctx.message.author if (member == None) else member
@@ -158,16 +182,14 @@ async def avatar(ctx, member : discord.Member = None):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command()
-@commands.has_permissions(administrator = True)
-async def kick(ctx, member : discord.Member, reason=None):
-    if reason == None:
-        await ctx.send(f"Воу {ctx.author.mention}, enter a reason for this!")
-    else:
-        messageok = f"You were banned for {ctx.guild.name} becouse of {reason}"
-        await ctx.send(f"{ctx.author.mention} The person was successfully banned!:white_check_mark:")
-        await member.send(messageok)
-        await member.kick(reason=reason)
+@Bot.command( pass_context = True )
+@commands.has_permissions( administrator = True )
+
+async def kick ( ctx, member: discord.Member, *, reason = None ):
+    await ctx.channel.purge( limit = 1 )
+
+    await member.kick( reason = reason )
+    await ctx.send( f'User has been kicked { member.mention }' )
 
 #------------------------------------------------------------------------------------------------------------------------#
 
