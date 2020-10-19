@@ -14,7 +14,7 @@ import random as r
 
 
 
-prefix = '!'
+prefix = '?'
 
 Bot = commands.Bot(command_prefix= prefix)
 
@@ -48,7 +48,7 @@ async def info(ctx):
 @Bot.event
 async def on_ready():
     print('I woke up after a stroke...')
-    game = discord.Game(r"!info")
+    game = discord.Game(r"?info")
     await Bot.change_presence(status=discord.Status.online, activity=game)
 
 #------------------------------------------------------------------------------------------------------------------------#
