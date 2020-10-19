@@ -196,7 +196,7 @@ async def kick ( ctx, member: discord.Member, *, reason = None ):
 @Bot.command( pass_context = True )
 @commands.has_permissions( administrator = True )
 
-async def mute ( ctx, member: discord.Member, *, reason = None ):
+async def tempmute ( ctx, member: discord.Member, *, reason = None ):
     await ctx.chanell.purge( limit = 1 )
 
     await member.mute( reason = reason )
