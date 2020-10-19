@@ -26,7 +26,7 @@ async def info(ctx):
     emb.add_field(name = "{}info".format(prefix), value= "**Show all commands**" )
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Game:video_game:", colour= 0x8B8989)
-    emb.add_field(name = "{}rock Paper Scissors".format(prefix), value= "**Play rock paper scissors with bots**")
+    emb.add_field(name = "{}rps".format(prefix), value= "**Play rock paper scissors with bots**")
     emb.add_field(name = "{}play".format(prefix), value= "**Heads and tails**", inline=False)
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Tools(Admin):tools:", colour= 0x8B8989)
@@ -81,7 +81,7 @@ async def unmute(ctx, member: discord.Member):
 #------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command()
-async def играть(ctx):
+async def play(ctx):
     """Play with bot"""
     num=random.randint(1,2)
     if (num == 1):
@@ -116,11 +116,8 @@ class Messages:
                     continue
         return n_messages
 #------------------------------------------------------------------------------------------------------------------------#
-
-
-#------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
-async def кнб(ctx, move: str = None):
+async def rps(ctx, move: str = None):
     solutions = ["`scissors`", "`rock`", "`paper`"]
     winner = "**DRAW**"
     p1 = solutions.index(f"`{move.lower()}`")
@@ -150,7 +147,7 @@ async def ban(ctx, member : discord.Member, reason=None):
 #------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command()
-async def аватар(ctx, member : discord.Member = None):
+async def avatar(ctx, member : discord.Member = None):
     user = ctx.message.author if (member == None) else member
     await ctx.message.delete()
     embed = discord.Embed(title=f'User avatar {user}', description= f'[Image link]({user.avatar_url})', color=user.color)
@@ -191,11 +188,6 @@ async def wiki(ctx, *, args):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command()
-async def Stick(ctx, member : discord.Member):
-    await ctx.send(f"{ctx.author.mention} https://i.ibb.co/1QYjpKJ/image0.jpg", "Well done, you found a cheerleader!")
-
-#------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
 async def userinfo(ctx, Member: discord.Member = None, member : discord.Member = None):
     await ctx.message.delete()
