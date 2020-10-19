@@ -39,7 +39,7 @@ async def info(ctx):
     emb.add_field(name = "{}avatar".format(prefix), value= "**Show the avatar of the specified member**", inline=False)
     emb.add_field(name = "{}userinfo".format(prefix), value= "**Shows all information about the user**", inline=False)
     emb.add_field(name = "{}wiki".format(prefix), value= "**Wikipedia**", inline=False)
-    emb.set_footer(text= 'author's site jutix.xyz sealed 2020 ©', icon_url='https://i.ibb.co/0n03k4G/ava.png')
+    emb.set_footer(text= 'author site jutix.xyz sealed 2020 ©', icon_url='https://i.ibb.co/0n03k4G/ava.png')
     emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
     
