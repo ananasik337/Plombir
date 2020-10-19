@@ -175,7 +175,7 @@ import wikipedia
 @Bot.command()
 async def wiki(ctx, *, args):
   try:
-    wikipedia.set_lang("ru")
+    wikipedia.set_lang("en")
     new_page = wikipedia.page(f'{args}')
     summ = wikipedia.summary(f'{args}', sentences=5)
     emb = discord.Embed(title=new_page.title,
