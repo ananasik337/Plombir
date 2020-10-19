@@ -47,8 +47,8 @@ async def info(ctx):
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.event
 async def on_ready():
-    print('I woke up after a stroke ...')
-    game = discord.Game(r"!инфо")
+    print('I woke up after a stroke...')
+    game = discord.Game(r"!info")
     await Bot.change_presence(status=discord.Status.online, activity=game)
 
 #------------------------------------------------------------------------------------------------------------------------#
