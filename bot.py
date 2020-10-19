@@ -53,17 +53,17 @@ async def on_ready():
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.event
-async def on_member_join(member):
-    channel = Bot.get_channel(741329019198242897)
-    await channel.send(embed = discord.Embed(description = f'''📢User ``{member}`` joined📢''', color=0x009cd1))
+#@Bot.event
+#async def on_member_join(member):
+#    channel = Bot.get_channel(741329019198242897)
+#    await channel.send(embed = discord.Embed(description = f'''📢User ``{member}`` joined📢''', color=0x009cd1))
 
 #------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command()
 @commands.has_permissions(administrator= True)
 async def mute(ctx, member: discord.Member):
-    mute_role = discord.utils.get(ctx.message.guild.roles, name= "Muted")
+    mute_role = discord.utils.get(ctx.message.guild.roles, name= "muted-newfag")
     await member.add_roles(mute_role)
     author = ctx.message.author
     await ctx.send(f"Man was successfully muted!:white_check_mark: {author.mention}")
@@ -73,7 +73,7 @@ async def mute(ctx, member: discord.Member):
 @Bot.command()
 @commands.has_permissions(administrator= True)
 async def unmute(ctx, member: discord.Member):
-    mute_role = discord.utils.get(ctx.message.guild.roles, name= "Muted")
+    mute_role = discord.utils.get(ctx.message.guild.roles, name= "muted-newfag")
     await member.remove_roles(mute_role)
     author = ctx.message.author
     await ctx.send(f"Man was successfully unmuted!:white_check_mark: {author.mention}")
