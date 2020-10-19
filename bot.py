@@ -39,7 +39,7 @@ async def info(ctx):
     emb.add_field(name = "{}avatar".format(prefix), value= "**Show the avatar of the specified member**", inline=False)
     emb.add_field(name = "{}userinfo".format(prefix), value= "**Shows all information about the user**", inline=False)
     emb.add_field(name = "{}wiki".format(prefix), value= "**Wikipedia**", inline=False)
-    emb.set_footer(text= 'author site jutix.xyz sealed 2020 ©', icon_url='https://i.ibb.co/0n03k4G/ava.png')
+    emb.set_footer(text= 'author site jutix.xyz sealed 2020 ©', icon_url='https://i.ibb.co/c3n8yNf/tumblr-f05f3d5c0e38233627b018bb9cff90a5-5ccccc19-400.gif')
     emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
     
@@ -192,8 +192,8 @@ async def wiki(ctx, *, args):
 #------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command()
-async def стас(ctx, member : discord.Member):
-    await ctx.send(f"{ctx.author.mention} https://i.ibb.co/1QYjpKJ/image0.jpg", "Well done, you are a person with mental disabilities!")
+async def Stick(ctx, member : discord.Member):
+    await ctx.send(f"{ctx.author.mention} https://i.ibb.co/1QYjpKJ/image0.jpg", "Well done, you found a cheerleader!")
 
 #------------------------------------------------------------------------------------------------------------------------#
 @Bot.command()
