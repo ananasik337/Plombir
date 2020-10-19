@@ -123,9 +123,9 @@ async def rps(ctx, move: str = None):
     p1 = solutions.index(f"`{move.lower()}`")
     p2 = randint(0, 2)
     if p1 == 0 and p2 == 1 or p1 == 1 and p2 == 2 or p1 == 2 and p2 == 0:
-        winner = f"{ctx.message.author.mention} ты **Проиграл**"
+        winner = f"{ctx.message.author.mention} You **Lose**"
     elif p1 == 1 and p2 == 0 or p1 == 2 and p2 == 1 or p1 == 0 and p2 == 2:
-        winner = f"{ctx.message.author.mention} ты **Won**"
+        winner = f"{ctx.message.author.mention} You **Won**"
     await ctx.send(    
         f"{ctx.message.author.mention} **=>** {solutions[p1]}\n"
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
