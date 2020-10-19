@@ -39,7 +39,7 @@ async def info(ctx):
     emb.add_field(name = "{}avatar".format(prefix), value= "**Show the avatar of the specified member**", inline=False)
     emb.add_field(name = "{}userinfo".format(prefix), value= "**Shows all information about the user**", inline=False)
     emb.add_field(name = "{}wiki".format(prefix), value= "**Wikipedia**", inline=False)
-    emb.set_footer(text= 'Youtube channel https://www.youtube.com/channel/UCs5Eyo4mKVNXW1is7dU2pPA? 2020 ©', icon_url='https://i.ibb.co/c3n8yNf/tumblr-f05f3d5c0e38233627b018bb9cff90a5-5ccccc19-400.gif' text='By jutix')
+    emb.set_footer(text= 'Youtube channel https://www.youtube.com/channel/UCs5Eyo4mKVNXW1is7dU2pPA? 2020 ©', icon_url='https://i.ibb.co/c3n8yNf/tumblr-f05f3d5c0e38233627b018bb9cff90a5-5ccccc19-400.gif')
     emb.timestamp = datetime.datetime.utcnow()
     await ctx.send(embed= emb)
     
