@@ -26,7 +26,7 @@ async def info(ctx):
     emb.add_field(name = "{}info".format(prefix), value= "**Show all commands**" )
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Game:video_game:", colour= 0x8B8989)
-    emb.add_field(name = "{}rps".format(prefix), value= "**Play rock paper scissors with bots**")
+    emb.add_field(name = "{}rps".format(prefix), value= "**Play rock,paper,scissors with bots**")
     emb.add_field(name = "{}play".format(prefix), value= "**Heads and tails**", inline=False)
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Tools(Admin):tools:", colour= 0x8B8989)
