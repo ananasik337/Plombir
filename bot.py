@@ -240,114 +240,115 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
     await ctx.send(embed=emb)
 #------------------------------------------------------------------------------------------------------------------------#
 
-from discord import Embed, FFmpegPCMAudio
+import discord
+import sqlite3
+import os
 from discord.ext import commands
-from discord.utils import get
 
-from youtube_dl import YoutubeDL
-from asyncio import run_coroutine_threadsafe
 
-class Music(commands.Cog, name='Musique'):
-    YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':'True',}
-    FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+DIR = "\\".join(os.path.dirname(__file__).split('\\')[:-1])
+db = sqlite3.connect(os.path.join(DIR, "reputation.db"))
+SQL = db.cursor()
 
+SQL.execute("""CREATE TABLE if not exists reputation(
+    user_id integer,
+    author_id integer,
+    guild_id integer,
+    rep integer,
+    reason text
+)""")
+db.commit()
+db.close()
+
+class reputation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.song_queue = {}
-        self.message = {}
+        self.plus_one = '+1'
+        self.minus_one = '-1'
 
-    @staticmethod
-    def parse_duration(duration):
-        result = []
-        m, s = divmod(duration, 60)
-        h, m = divmod(m, 60)
-        return f'{h:d}:{m:02d}:{s:02d}'
-
-    @staticmethod
-    def search(author, arg):
-        with YoutubeDL(Music.YDL_OPTIONS) as ydl:
-            try: requests.get(arg)
-            except: info = ydl.extract_info(f"ytsearch:{arg}", download=False)['entries'][0]
-            else: info = ydl.extract_info(arg, download=False)
-
-        embed = (Embed(title='🎵 Сейчас играет :', description=f"[{info['title']}]({info['webpage_url']})", color=0x3498db)
-                .add_field(name='Продолжительность', value=Music.parse_duration(info['duration']))
-                .add_field(name='Песня запущчена ', value=author)
-                .add_field(name='С канала', value=f"[{info['uploader']}]({info['channel_url']})")
-                .add_field(name="Очередь", value=f"Нет песен в очереди!")
-                .set_thumbnail(url=info['thumbnail']))
-
-        return {'embed': embed, 'source': info['formats'][0]['url'], 'title': info['title']}
-
-    async def edit_message(self, ctx):
-        embed = self.song_queue[ctx.guild][0]['embed']
-        content = "\n".join([f"({self.song_queue[ctx.guild].index(i)}) {i['title']}" for i in self.song_queue[ctx.guild][1:]]) if len(self.song_queue[ctx.guild]) > 1 else "Нет песен в очереди!"
-        embed.set_field_at(index=3, name="Песни в очереди :", value=content, inline=False)
-        await self.message[ctx.guild].edit(embed=embed)
-
-    def play_next(self, ctx):
-        voice = get(self.bot.voice_clients, guild=ctx.guild)
-        if len(self.song_queue[ctx.guild]) > 1:
-            del self.song_queue[ctx.guild][0]
-            run_coroutine_threadsafe(self.edit_message(ctx), self.bot.loop)
-            voice.play(FFmpegPCMAudio(self.song_queue[ctx.guild][0]['source'], **Music.FFMPEG_OPTIONS), after=lambda e: self.play_next(ctx))
-            voice.is_playing()
+    @commands.command(aliases=['+rep'])
+    async def plus_rep(self, ctx, member: discord.Member = None, *, reason=None):
+        """+реп для чела которого пинганули"""
+        db = sqlite3.connect(os.path.join(DIR, "reputation.db"))
+        SQL = db.cursor()
+        if not reason:
+            reason = ''
+        if not member:
+            db.close()
+            return await ctx.send(f"{ctx.author.mention}, вы не указали пользователя", delete_after=10)
+        if member == ctx.author:
+            db.close()
+            return await ctx.send(f"{ctx.author.mention}, вы не можете повысить репутацию самому себе", delete_after=10)
         else:
-            run_coroutine_threadsafe(voice.disconnect(), self.bot.loop)
-            run_coroutine_threadsafe(self.message[ctx.guild].delete(), self.bot.loop)
+            SQL.execute(f"INSERT INTO reputation(user_id, author_id, guild_id, rep, reason) VALUES ({member.id}, {ctx.author.id}, {ctx.guild.id}, 1, '{reason}')")
+            db.commit()
+            db.close()
+            title = 'Повышение! ðﾟﾑﾏ'
+            description = f"**{ctx.author.mention} повысил репутацию пользователя {member.mention}**\nПричина: {reason}"
+            await ctx.send(embed=discord.Embed(title=title,
+                                               description=description,
+                                               colour=0x32cd32),
+                           delete_after=60)
 
-    @commands.command(aliases=['p'], brief='!play [url/words]')
-    async def play(self, ctx, *, video: str):
-        channel = ctx.author.voice.channel
-        voice = get(self.bot.voice_clients, guild=ctx.guild)
-        song = Music.search(ctx.author.mention, video)
-
-        if voice and voice.is_connected():
-            await voice.move_to(channel)
+    @commands.command(aliases=['-rep'])
+    async def minus_rep(self, ctx, member: discord.Member = None, *, reason=None):
+        """-реп для чела которого пинганули"""
+        db = sqlite3.connect(os.path.join(DIR, "reputation.db"))
+        SQL = db.cursor()
+        if not reason:
+            reason = ''
+        if not member:
+            db.close()
+            return await ctx.send(f"{ctx.author.mention}, вы не указали пользователя", delete_after=10)
+        if member == ctx.author:
+            db.close()
+            return await ctx.send(f"{ctx.author.mention}, вы не можете понизить репутацию самому себе", delete_after=10)
         else:
-            voice = await channel.connect()     
+            SQL.execute(f"INSERT INTO reputation(user_id, author_id, guild_id, rep, reason) VALUES ({member.id}, {ctx.author.id}, {ctx.guild.id}, -1, '{reason}')")
+            db.commit()
+            db.close()
+            title = 'Понижение ðﾟﾘﾭ'
+            description = f"**{ctx.author.mention} понизил репутацию пользователя {member.mention}**\nПричина: {reason}"
+            await ctx.send(embed=discord.Embed(title=title,
+                                               description=description,
+                                               colour=0x32cd32),
+                           delete_after=60)
 
-        if not voice.is_playing():
-            self.song_queue[ctx.guild] = [song]
-            self.message[ctx.guild] = await ctx.send(embed=song['embed'])
-            await ctx.message.delete()
-            voice.play(FFmpegPCMAudio(song['source'], **Music.FFMPEG_OPTIONS), after=lambda e: self.play_next(ctx))
-            voice.is_playing()
+    @commands.command()
+    async def rep(self, ctx, user: discord.Member = None):
+        """показать репутацию определенного чела или свою"""
+        db = sqlite3.connect(os.path.join(DIR, "reputation.db"))
+        SQL = db.cursor()
+        if not user:
+            user = ctx.message.author
+        rep = SQL.execute(f"SELECT * from reputation WHERE user_id = {user.id} AND guild_id = {ctx.guild.id}").fetchall()
+        if not rep:
+            db.close()
+            return await ctx.send(f"У **{user.display_name}** нет репутации")
         else:
-            self.song_queue[ctx.guild].append(song)
-            await self.edit_message(ctx)
-
-    @commands.command(brief='!pause')
-    async def pause(self, ctx):
-        voice = get(self.bot.voice_clients, guild=ctx.guild)
-        if voice.is_connected():
-            await ctx.message.delete()
-            if voice.is_playing():
-                await ctx.send('⏸️ Музыка на паузе!', delete_after=5.0)
-                voice.pause()
-            else:
-                await ctx.send('⏯️ Музыка снята с паузы!', delete_after=5.0)
-                voice.resume()
-
-    @commands.command(aliases=['pass'], brief='!skip')
-    async def skip(self, ctx):
-        voice = get(self.bot.voice_clients, guild=ctx.guild)
-        if voice.is_playing():
-            await ctx.message.delete()
-            await ctx.send('⏭️ Песня пропущена!', delete_after=5.0)
-            voice.stop()
-
-    @commands.command(brief='!remove')
-    async def remove(self, ctx, *, num: int):
-        voice = get(self.bot.voice_clients, guild=ctx.guild)
-        if voice.is_playing():
-            del self.song_queue[ctx.guild][num]
-            await ctx.message.delete()
-            await self.edit_message(ctx)
+            t = f"Репутация пользователя {user.display_name}"
+            r = sum([k[3] for k in rep])
+            print(r)
+            d = f'**Репутация: {r}**\n\n'
+            for m in rep[-5:]:
+                d += '**'
+                if m[3] == 1:
+                    d += self.plus_one
+                elif m[3] == -1:
+                    d += self.minus_one
+                mem_from = ctx.guild.get_member(m[1]).mention
+                d += f' | от {mem_from} | {m[4]}**\n'
+        db.close()
+        emb = discord.Embed(title=t, description=d, color=0x32cd32)
+        emb.set_footer(text=f'Запросил: {ctx.message.author}', icon_url=str(ctx.message.author.avatar_url))
+        await ctx.send(embed=emb)
 
 
 def setup(bot):
-    bot.add_cog(Music(bot))
+    bot.add_cog(reputation(bot))
+    print('[REPUTATION] loaded')
+
+
 
 
 token = os.environ.get('BOT_TOKEN')
