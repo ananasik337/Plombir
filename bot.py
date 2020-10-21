@@ -208,14 +208,15 @@ async def ban(ctx, member:discord.Member, seconds:int):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command( pass_context = True )
-@commands.has_permissions( administrator = True )
-
-async def mute ( ctx, member: discord.Member, *, reason = None ):
-    await ctx.chanell.purge( limit = 1 )
-
-    await member.mute( reason = reason )
-    await ctx.send(f'User {member.name} got a mut on {seconds} seconds')
+@client.command()
+@commands.has_permissions(administrator=True)
+async def mute(ctx, member: discord.Member):
+    emb = discord.Embed(title="( ◡‿◡ )", description=f'Muted user :{member.mention}', colour = discord.Color.red())
+    await ctx.message.delete()
+    emb.set_author(name=member.name, icon_url = member.avatar_url)
+    mute_role = discord.utils.get(ctx.message.guild.roles, name="muted")
+    await member.add_roles(mute_role)
+    await ctx.send(embed=emb)
 
 #------------------------------------------------------------------------------------------------------------------------#
 
