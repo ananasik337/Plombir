@@ -182,11 +182,28 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
 #------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command(pass_context= True)
-async def Hi(ctx):
+async def test(ctx):
     await ctx.send("Hi my friend! {}".format(ctx.message.author))
 
 #------------------------------------------------------------------------------------------------------------------------#
 
+import discord
+import asyncio
+from discord.ext import commands
+from discord.ext.commands import Bot
+
+Bot = commands.Bot(command_prefix= '-')
+Bot.remvoe_command( 'help' )
+
+@Bot.event
+async def on_ready():
+    print("Bot is online")
+    
+@Bot.command(pass_context= True)
+async def привет(ctx):
+    await ctx.send("Привет мой дорогой друг! {}".format(ctx.message.author))
+
+# Kick
 @Bot.command( pass_context = True )
 @commands.has_permissions( administrator = True )
 
@@ -194,20 +211,17 @@ async def kick ( ctx, member: discord.Member, *, reason = None ):
     await ctx.channel.purge( limit = 1 )
 
     await member.kick( reason = reason )
-    await ctx.send( f'User has been kicked! { member.mention }' )
+    await ctx.send( f'Юзер был успешно кикнут! { member.mention }' )
 
-
-#------------------------------------------------------------------------------------------------------------------------#
-
+# Ban
 @Bot.command()
 async def ban(ctx, member:discord.Member, seconds:int):
-  await ctx.send(f'User {member.name} got banned on {seconds} seconds')
+  await ctx.send(f'Пользователь {member.name} получил бан на {seconds} секунд')
   await member.ban()
   await asyncio.sleep(seconds)
   await member.unban()
-
-#------------------------------------------------------------------------------------------------------------------------#
-
+    
+# Mute
 @Bot.command( pass_context = True )
 @commands.has_permissions( administrator = True )
 
@@ -217,24 +231,23 @@ async def mute ( ctx, member: discord.Member, *, reason = None ):
     await member.mute( reason = reason )
     await ctx.send(f'Пользователь {member.name} получил мут на {seconds} секунд')
 
-#------------------------------------------------------------------------------------------------------------------------#
-
+# Unban    
 @Bot.command( pass_context = True )
 
 async def unban( ctx, *, member ):
     await ctx.channel.purge( limit = 1 )
 
-    banned_useres = await ctx.guild.ban()
+    banned_useres = await ctx.guild.band()
 
     for ban_entry in banned_users:
         user = ban_entry.user
 
         await ctx.guild.unban( user )
-        await ctx.send( f'The user was unbanned! { user.mention }')
+        await ctx.send( f'Юзер был успешно разбанен! { user.mention }')
 
         return
-
 #------------------------------------------------------------------------------------------------------------------------#
+
 
 
 token = os.environ.get('BOT_TOKEN')
