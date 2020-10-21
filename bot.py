@@ -181,11 +181,6 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-import discord
-import asyncio
-from discord.ext import commands
-from discord.ext.commands import Bot
-
 # Kick
 @Bot.command( pass_context = True )
 @commands.has_permissions( administrator = True )
@@ -229,6 +224,7 @@ async def unban( ctx, *, member ):
         await ctx.send( f'Юзер был успешно разбанен! { user.mention }')
 
         return
+
 #------------------------------------------------------------------------------------------------------------------------#
 
 
