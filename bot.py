@@ -36,7 +36,7 @@ async def info(ctx):
     emb.add_field(name = "{}mute".format(prefix), value= "**Forbid the participant to write, speak**")
     emb.add_field(name = "{}unmute".format(prefix), value= "**Allow the participant to write, speak**")
     emb.add_field(name = "{}ban".format(prefix), value= "**Bans the participant**", inline=False)
-	emb.add_field(name = "{}unban".format(prefix), value= "**Unbans the participant**")	
+    emb.add_field(name = "{}unban".format(prefix), value= "**Unbans the participant**", inline=False)	
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Buns", colour= 0x8B8989)
     emb.add_field(name = "{}avatar".format(prefix), value= "**Show the avatar of the specified member**", inline=False)
