@@ -200,10 +200,10 @@ async def kick ( ctx, member: discord.Member, *, reason = None ):
 #------------------------------------------------------------------------------------------------------------------------#
 
 @Bot.command()
-async def ban(ctx, member:discord.Member, minutes:int):
-  await ctx.send(f'User {member.name} got banned on {minutes} minutes')
+async def ban(ctx, member:discord.Member, seconds:int):
+  await ctx.send(f'User {member.name} got banned on {seconds} seconds')
   await member.ban()
-  await asyncio.sleep(minutes)
+  await asyncio.sleep(seconds)
   await member.unban()
 
 #------------------------------------------------------------------------------------------------------------------------#
@@ -215,7 +215,7 @@ async def mute ( ctx, member: discord.Member, *, reason = None ):
     await ctx.chanell.purge( limit = 1 )
 
     await member.mute( reason = reason )
-    await ctx.send(f'User {member.name} got mute on {seconds} секунд')
+    await ctx.send(f'User {member.name} got a mut on {seconds} seconds')
 
 #------------------------------------------------------------------------------------------------------------------------#
 
