@@ -11,6 +11,8 @@ import os
 from time import sleep
 import io
 import random as r
+from discord.ext import commands
+from discord.ext.commands import Bot
 
 
 
@@ -33,9 +35,10 @@ async def info(ctx):
     emb.add_field(name = "{}clear".format(prefix), value= "**Cleans chat from 1/10000**", inline=False)
     emb.add_field(name = "{}mute".format(prefix), value= "**Forbid the participant to write, speak**")
     emb.add_field(name = "{}unmute".format(prefix), value= "**Allow the participant to write, speak**")
-    emb.add_field(name = "{}ban".format(prefix),  value= "**Bans the participant**", inline=False)   
+    emb.add_field(name = "{}ban".format(prefix),  value= "**Bans the participant**", inline=False)
+	emb.add_field(name = "{}unban".format(prefix),  value= "**Bans the participant**", inline=False)	
     await ctx.send(embed= emb)
-    emb = discord.Embed(title= "Buns:smiling_face_with_3_hearts:", colour= 0x8B8989)
+    emb = discord.Embed(title= "Buns", colour= 0x8B8989)
     emb.add_field(name = "{}avatar".format(prefix), value= "**Show the avatar of the specified member**", inline=False)
     emb.add_field(name = "{}userinfo".format(prefix), value= "**Shows all information about the user**", inline=False)
     emb.add_field(name = "{}wiki".format(prefix), value= "**Wikipedia**", inline=False)
@@ -58,25 +61,6 @@ async def on_ready():
 #    channel = Bot.get_channel(741329019198242897)
 #    await channel.send(embed = discord.Embed(description = f'''📢User ``{member}`` joined📢''', color=0x009cd1))
 
-#------------------------------------------------------------------------------------------------------------------------#
-
-@Bot.command()
-@commands.has_permissions(administrator= True)
-async def mute(ctx, member: discord.Member):
-    mute_role = discord.utils.get(ctx.message.guild.roles, name= "muted-newfag")
-    await member.add_roles(mute_role)
-    author = ctx.message.author
-    await ctx.send(f"Man was successfully muted!:white_check_mark: {author.mention}")
-
-#------------------------------------------------------------------------------------------------------------------------#
-
-@Bot.command()
-@commands.has_permissions(administrator= True)
-async def unmute(ctx, member: discord.Member):
-    mute_role = discord.utils.get(ctx.message.guild.roles, name= "muted-newfag")
-    await member.remove_roles(mute_role)
-    author = ctx.message.author
-    await ctx.send(f"Man was successfully unmuted!:white_check_mark: {author.mention}")
 
 #------------------------------------------------------------------------------------------------------------------------#
 
@@ -131,42 +115,7 @@ async def rps(ctx, move: str = None):
         f"{Bot.user.mention} **=>** {solutions[p2]}\n"
         f"{winner}")
 
-#------------------------------------------------------------------------------------------------------------------------#
-
-@Bot.command()
-@commands.has_permissions(administrator = True)
-async def ban(ctx, member : discord.Member, reason=None):
-    if reason == None:
-        await ctx.send(f"Воу {ctx.author.mention}, enter a reason for this!")
-    else:
-        messageok = f"You were banned for {ctx.guild.name} because of {reason}"
-        await ctx.send(f"{ctx.author.mention} The person was successfully banned!:white_check_mark:")
-        await member.send(messageok)
-        await member.ban(reason=reason)
-
-#------------------------------------------------------------------------------------------------------------------------#
-
-@Bot.command( pass_context = True )
-
-async def unban( ctx, *, member ):
-    await ctx.channel.purge( limit = 1 )
-
-    banned_useres = await ctx.guild.band()
-
-    for ban_entry in banned_users:
-        user = ban_entry.user
-
-        await ctx.guild.unban( user )
-        await ctx.send( f'The person was successfully banned!:white_check_mark:{ user.mention }')
         
-#------------------------------------------------------------------------------------------------------------------------# 
-
-@Bot.command()
-async def tempban(ctx, member:discord.Member, seconds:int):
-  await ctx.send(f'User {member.name} got banned on {seconds} second')
-  await member.ban()
-  await asyncio.sleep(seconds)
-  await member.unban()
 
 #------------------------------------------------------------------------------------------------------------------------# 
     
@@ -181,27 +130,6 @@ async def avatar(ctx, member : discord.Member = None):
     await ctx.send(embed=embed)
 
 #------------------------------------------------------------------------------------------------------------------------#
-
-@Bot.command( pass_context = True )
-@commands.has_permissions( administrator = True )
-
-async def kick ( ctx, member: discord.Member, *, reason = None ):
-    await ctx.channel.purge( limit = 1 )
-
-    await member.kick( reason = reason )
-    await ctx.send( f'User has been kicked { member.mention }' )
-
-#------------------------------------------------------------------------------------------------------------------------#
-
-@Bot.command( pass_context = True )
-@commands.has_permissions( administrator = True )
-
-async def tempmute ( ctx, member: discord.Member, *, reason = None ):
-    await ctx.chanell.purge( limit = 1 )
-
-    await member.mute( reason = reason )
-    await ctx.send(f'Пользователь {member.name} получил мут на {seconds} секунд')
-    #------------------------------------------------------------------------------------------------------------------------#
 
 import wikipedia
 @Bot.command()
@@ -238,8 +166,75 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
     emb.set_footer(icon_url= Member.avatar_url)
     emb.set_footer(text='Создано: {}'.format(ctx.author.name), icon_url=ctx.author.avatar_url)
     await ctx.send(embed=emb)
+
 #------------------------------------------------------------------------------------------------------------------------#
 
+# _____                _       #
+#|_   _|              | |      #
+#  | |    ___    ___  | | ___  #
+#  | |   / _ \  / _ \ | |/ __| #
+#  | |  | (_) || (_) || |\__ \ #
+#  \_/   \___/  \___/ |_||___/ #
+#							   #
+
+
+
+#------------------------------------------------------------------------------------------------------------------------#
+
+@Bot.command(pass_context= True)
+async def Hi(ctx):
+    await ctx.send("Hi my friend! {}".format(ctx.message.author))
+
+#------------------------------------------------------------------------------------------------------------------------#
+
+@Bot.command( pass_context = True )
+@commands.has_permissions( administrator = True )
+
+async def kick ( ctx, member: discord.Member, *, reason = None ):
+    await ctx.channel.purge( limit = 1 )
+
+    await member.kick( reason = reason )
+    await ctx.send( f'User has been kicked! { member.mention }' )
+
+
+#------------------------------------------------------------------------------------------------------------------------#
+
+@Bot.command()
+async def ban(ctx, member:discord.Member, minutes:int):
+  await ctx.send(f'User {member.name} got banned on {minutes} minutes')
+  await member.ban()
+  await asyncio.sleep(minutes)
+  await member.unban()
+
+#------------------------------------------------------------------------------------------------------------------------#
+
+@Bot.command( pass_context = True )
+@commands.has_permissions( administrator = True )
+
+async def mute ( ctx, member: discord.Member, *, reason = None ):
+    await ctx.chanell.purge( limit = 1 )
+
+    await member.mute( reason = reason )
+    await ctx.send(f'User {member.name} got mute on {seconds} секунд')
+
+#------------------------------------------------------------------------------------------------------------------------#
+
+@Bot.command( pass_context = True )
+
+async def unban( ctx, *, member ):
+    await ctx.channel.purge( limit = 1 )
+
+    banned_useres = await ctx.guild.band()
+
+    for ban_entry in banned_users:
+        user = ban_entry.user
+
+        await ctx.guild.unban( user )
+        await ctx.send( f'The user was unbanned! { user.mention }')
+
+        return
+
+#------------------------------------------------------------------------------------------------------------------------#
 
 
 token = os.environ.get('BOT_TOKEN')
