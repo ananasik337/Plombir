@@ -192,17 +192,6 @@ import asyncio
 from discord.ext import commands
 from discord.ext.commands import Bot
 
-Bot = commands.Bot(command_prefix= '-')
-Bot.remvoe_command( 'help' )
-
-@Bot.event
-async def on_ready():
-    print("Bot is online")
-    
-@Bot.command(pass_context= True)
-async def привет(ctx):
-    await ctx.send("Привет мой дорогой друг! {}".format(ctx.message.author))
-
 # Kick
 @Bot.command( pass_context = True )
 @commands.has_permissions( administrator = True )
