@@ -181,16 +181,14 @@ async def userinfo(ctx, Member: discord.Member = None, member : discord.Member =
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-@Bot.command(pass_context= True)
-async def test(ctx):
-    await ctx.send("Hi my friend! {}".format(ctx.message.author))
-
-#------------------------------------------------------------------------------------------------------------------------#
-
 import discord
 import asyncio
 from discord.ext import commands
 from discord.ext.commands import Bot
+
+@Bot.command(pass_context= True)
+async def test(ctx):
+    await ctx.send("Hi my friend! {}".format(ctx.message.author))
 
 # Kick
 @Bot.command( pass_context = True )
