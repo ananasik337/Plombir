@@ -35,7 +35,7 @@ async def info(ctx):
     emb.add_field(name = "{}clear".format(prefix), value= "**Cleans chat from 1/10000**", inline=False)
     emb.add_field(name = "{}mute".format(prefix), value= "**Forbid the participant to write, speak**")
     emb.add_field(name = "{}unmute".format(prefix), value= "**Allow the participant to write, speak**")
-    emb.add_field(name = "{}ban".format(prefix), value= "**Bans the participant (seconds)**", inline=False)
+    emb.add_field(name = "{}ban".format(prefix), value= "**Bans the participant**", inline=False)
     emb.add_field(name = "{}unban".format(prefix), value= "**Unbans the participant**", inline=False)	
     await ctx.send(embed= emb)
     emb = discord.Embed(title= "Buns", colour= 0x8B8989)
@@ -208,7 +208,14 @@ async def ban(ctx, member:discord.Member, seconds:int):
 
 #------------------------------------------------------------------------------------------------------------------------#
 
-#cooming soon
+@Bot.command( pass_context = True )
+@commands.has_permissions( administrator = True )
+
+async def mute ( ctx, member: discord.Member, *, reason = None ):
+    await ctx.chanell.purge( limit = 1 )
+
+    await member.mute( reason = reason )
+    await ctx.send(f'Пользователь {member.name} получил мут на {seconds} секунд')
 
 #------------------------------------------------------------------------------------------------------------------------#
 
@@ -226,6 +233,180 @@ async def unban( ctx, *, member ):
         await ctx.send( f'The user was unbanned! { user.mention }')
 
         return
+
+#------------------------------------------------------------------------------------------------------------------------#
+
+
+import discord
+import random
+import io
+import sys
+from discord.ext import commands
+import asyncio
+import datetime
+
+class Cog(commands.Cog):
+
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+        if not message.guild.id == 698510531538976799: # Сюда ид своего сервера
+            return    
+        if not message.author.bot:
+            channel = self.bot.get_channel(768578202821591050) # Сюда ид текстового канала
+            embed = discord.Embed(
+                description = 'Сообщения было удалено', 
+                colour = 0x2f3136,
+                timestamp = datetime.datetime.utcnow())
+            for a in message.attachments:
+                if a.filename.endswith((".png", ".jpg", ".gif", ".mp4")):
+                    embed.set_image(url = f'{a.proxy_url}')
+                    break
+            embed.add_field(name = 'Удалённое сообщение: ', value = f'```{message.content}```' or f'{a.proxy_url}', inline = False)
+            embed.add_field(name = 'Автор сообщения: ', value = f'{message.author.mention}', inline = True)
+            embed.add_field(name = 'В канале: ', value = f'{message.channel.mention}')
+            embed.set_footer(text = f'ID сообщения: {message.id}')
+            await channel.send(embed = embed)
+
+    @commands.Cog.listener() 
+    async def on_message_edit(self, before, after):
+        if not before.guild.id == 698510531538976799: # Сюда ид своего сервера
+            return            
+        if not before.author.bot:
+            if before.author != self.bot.user:
+                channel = self.bot.get_channel(768578202821591050) # Сюда ид текстового канала
+                embed = discord.Embed(
+                    description = 'Сообщение было отредактировано', 
+                    colour = 0x2f3136,
+                    timestamp = datetime.datetime.utcnow())
+                embed.add_field(name = 'Старое содержимое:', value = f'```{before.content}```', inline = False)
+                embed.add_field(name = 'Новое содержимое:', value = f'```{after.content}```', inline = False)
+                embed.add_field(name = 'Автор', value = before.author.mention)
+                embed.add_field(name = 'Канал', value = before.channel.mention)
+                embed.set_footer(text = f'ID сообщения: {before.id}')
+                await channel.send(embed = embed)
+
+    @commands.Cog.listener()
+    async def on_member_join(self, member):
+        if not member.guild.id == 698510531538976799: # Сюда ид своего сервера
+            return
+        if not member.bot:
+            channel_id = self.bot.get_channel(768578202821591050) # Сюда ид текстового канала
+            embed = discord.Embed(
+                description = f'Участник **{member.name}** {member.mention} присоединился к серверу',
+                color = 0x8af889,
+                timestamp = datetime.datetime.utcnow())
+            embed.set_footer(text = f"Зарегистрированный {member.created_at}"[:45])
+            await channel_id.send(embed = embed)
+
+    @commands.Cog.listener()
+    async def on_member_remove(self, member):
+        if not member.guild.id == 698510531538976799: # Сюда ид своего сервера
+            return
+        if not member.bot:
+            channel_id = self.bot.get_channel(768578202821591050)
+            embed = discord.Embed(
+                description = f'Участник **{member.name}** {member.mention} покинул сервер',
+                color = 0xffff00,
+                timestamp = datetime.datetime.utcnow())
+            embed.set_footer(text = f"Зарегистрированный {member.created_at}"[:45])
+            await channel_id.send(embed = embed)
+
+
+    @commands.Cog.listener()
+    async def on_member_update(self, before, after):
+        if not before.guild.id == 698510531538976799: # Сюда ид своего сервера
+            return
+
+        if not len(before.roles) == len(after.roles):
+            role = [ ]
+            if len(before.roles) > len(after.roles):
+                for i in before.roles:
+                    if not i in after.roles:
+                        role.append(f'Убраны роли {i.name}(<@&{i.id}>)\n')
+            elif len(before.roles) < len(after.roles):
+                for i in after.roles:
+                    if not i in before.roles:
+                        role.append(f'Добавлены роли {i.name}(<@&{i.id}>)\n')
+            
+            str_a = ''.join(role)
+            channel = self.bot.get_channel(768578202821591050) # Сюда ид текстового канала
+            embed = discord.Embed(
+                description = f'Роли участника **{before.display_name}** {after.mention} были изменены',
+                color = 0x2f3136,
+                timestamp = datetime.datetime.utcnow())
+            embed.add_field(name = f'{str_a[:14]}', value = f"**{str_a[14:]}**", inline = False)
+            embed.set_footer(text = f'ID сообщения: {before.id}')
+            return await channel.send(embed = embed)
+
+        if not before.display_name == after.display_name:
+            channel = self.bot.get_channel(768578202821591050) # Сюда ид текстового канала
+            embed = discord.Embed(
+                description = f'Никнейм участника **{before.display_name}** {after.mention} были изменен',
+                color = 0x2f3136,
+                timestamp = datetime.datetime.utcnow())
+            embed.add_field(name = 'Старый никнейм:', value = f'{before.display_name}', inline = False)
+            embed.add_field(name = 'Новый никнейм:', value = f'{after.display_name}', inline = False)
+            embed.set_footer(text = f'ID сообщения: {before.id}')
+            await channel.send(embed = embed)
+
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member, before = None, after = None):
+        if not member.guild.id == 698510531538976799: # Сюда ид своего сервера
+            return
+        if after.channel == None:
+            if not before.channel == None:
+                if member.bot:
+                    return
+                channel = self.bot.get_channel(768578202821591050) # Сюда ид текстового канала
+                embed = discord.Embed(
+                    description = f'Участник **{member.display_name}** {member.mention} вышел из голосового канала',
+                    color = 0x2f3136,
+                    timestamp = datetime.datetime.utcnow())
+                embed.add_field(name = 'Покинул', value = f'**{before.channel.name}** {before.channel.mention}')
+                return await channel.send(embed = embed)
+
+        if (not before.channel == None) and (not after.channel == None):
+            if before.channel.id == after.channel.id:
+                return
+
+            if member.bot:
+                return
+            channel = self.bot.get_channel(768578202821591050) # Сюда ид текстового канала
+            embed = discord.Embed(
+                description = f'Участник **{member.display_name}** {member.mention} перешёл в другой голосового канала',
+                color = 0x2f3136,
+                timestamp = datetime.datetime.utcnow())
+            embed.add_field(name = 'Присоединился:', value = f'**{after.channel.name}** {after.channel.mention}', inline = False)
+            embed.add_field(name = 'Покинул:', value = f'**{before.channel.name}** {before.channel.mention}', inline = False)
+            return await channel.send(embed = embed)
+
+        if not after.channel == None:
+            if before.channel == None:
+                if member.bot:
+                    return
+                channel = self.bot.get_channel(768578202821591050) # Сюда ид текстового канала
+                embed = discord.Embed(
+                    description = f'Участник **{member.display_name}** {member.mention} подключился к голосовому каналу',
+                    color = 0x2f3136,
+                    timestamp = datetime.datetime.utcnow())
+                embed.add_field(name = 'Присоединился:', value = f'**{after.channel.name}** {after.channel.mention}')
+                return await channel.send(embed = embed)
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+    	await ctx.message.delete()
+
+    	if isinstance(error, commands.CommandNotFound):
+    		return
+    	embed = discord.Embed(
+    		title = 'Ошибка',
+    		description = f'Отказано в доступе!',
+    		color = 0x2f3136)
+    	embed.set_thumbnail(url = f'{ctx.author.avatar_url}')
+    	await ctx.send(embed = embed, delete_after = 15)
 
 #------------------------------------------------------------------------------------------------------------------------#
 
