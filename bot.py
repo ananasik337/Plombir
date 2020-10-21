@@ -186,10 +186,6 @@ import asyncio
 from discord.ext import commands
 from discord.ext.commands import Bot
 
-@Bot.command(pass_context= True)
-async def test(ctx):
-    await ctx.send("Hi my friend! {}".format(ctx.message.author))
-
 # Kick
 @Bot.command( pass_context = True )
 @commands.has_permissions( administrator = True )
